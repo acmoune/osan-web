@@ -1,0 +1,41 @@
+﻿#admin-bar {
+    height: 40px;
+    display: flex;
+    padding: 0px 25px;
+    align-items: center;
+    border-bottom: 1px solid #233c5b;
+    background-color: #5c7ea8;
+    color: white;
+}
+
+#admin-header {
+    font-size: 11pt;
+    font-weight: bold;
+    width: 225px;
+}
+
+#toolbar {
+    flex-grow: 1;
+}
+
+#admin-bar #user {
+    width: 120px;
+}
+
+#admin-sidebar {
+    width: 250px;
+    height: calc(100vh - 40px);
+    position: fixed;
+    top: 40px;
+    left: 0px;
+    border-right: 1px solid #DFDFDF;
+}
+
+#admin-body {
+    width: calc(100vw - 250px);
+    height: calc(100vh - 40px);
+    position: fixed;
+    top: 40px;
+    right: 0px;
+    overflow-y: auto;
+}

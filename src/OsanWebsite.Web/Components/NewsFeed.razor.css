@@ -1,0 +1,25 @@
+﻿.post-details a  {
+    font-weight: bold;
+}
+
+.post-item img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid #e1bbc5;
+}
+
+.post-details {
+    font-size: 11pt;
+    padding: 10px;
+    margin-bottom: 25px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid #e1bbc5;
+    border-top-width: 0px;
+    color: #808080;
+}
+
+.post-date {
+    font-size: 8pt;
+}

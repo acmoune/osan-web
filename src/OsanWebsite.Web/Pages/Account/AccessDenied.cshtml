@@ -1,0 +1,13 @@
+﻿@page
+@model OsanWebsite.Web.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "_AdminLayout";
+}
+
+<div style="width: 100vw;height:100vh;display: flex;align-items:center;justify-content:center;">
+    <div style="text-align:center;font-size: 10pt;">
+        <div>You are not authorired to view that page</div>
+        <a class="btn btn-danger btn-sm" href="/account/signout">Signout</a>
+    </div>
+</div>

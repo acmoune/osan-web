@@ -1,0 +1,19 @@
+﻿@page "/admin"
+@model OsanWebsite.Web.Pages.Admin.IndexModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manager";
+    string firstName = User.Claims.Where(c => c.Type == "given_name").Single().Value;
+    string lastName = User.Claims.Where(c => c.Type == "family_name").Single().Value;
+}
+
+<div id="account" style="position:fixed; top:0px; right: 0px; width: 150px; height: 40px; display: flex; align-items: center; justify-content:flex-end; padding-right: 15px; color: white; font-size: 8pt; z-index: 1001">
+    <div><strong>@firstName @lastName</strong> &nbsp; <a href="/account/signout" style="color: lightsalmon">Logout</a></div>
+</div>
+
+<component type="typeof(OsanWebsite.Web.Components.Admin.AdminPage)" render-mode="Server" />
+
+@section Scripts {
+    <script src="_framework/blazor.server.js"></script>
+}

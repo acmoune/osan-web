@@ -1,0 +1,101 @@
+﻿@inject IEventsRepository eventsRepo
+@inject ISpotsRepository spotsRepo
+
+<div>
+    @if (loading)
+    {
+        <Div Style="text-align:center;padding: 20px;">
+            <img src="/images/spinner.gif" style="width: 16px;" />
+        </Div>
+    }
+    else if (_initialItems?.Count() > 0)
+    {
+        <InfiniteList 
+            InitialItems=_initialItems
+            PageSize=pageSize
+            PageCount=pageCount
+            Total=total
+            OnFetch=fetchNews
+            TItem=INews>
+
+            <LoadingMoreTemplate>
+                <Div Style="text-align:center;padding: 20px;">
+                    <img src="/images/spinner.gif" style="width: 16px;" />
+                </Div>
+            </LoadingMoreTemplate>
+
+            <ItemTemplate Context="News">
+                <div class="post-item">
+                    <img src="@News.GetImageUrl()" />
+                    <div class="post-details">
+                        <a href="@News.GetUrl()" class="osan-link">@News.Title</a>
+                        <div class="post-date">@News.Date.ToString("dd/MM/yyyy")</div>
+                    </div>
+                </div>
+            </ItemTemplate>
+        </InfiniteList>
+    }
+    else
+    {
+        <span>No Items</span>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Feed { get; set; } = default!;
+
+    private bool loading = false;
+    private IEnumerable<INews>? _initialItems;
+
+    private int pageSize = 5;
+    private int pageCount;
+    private int total;
+
+    protected override async void OnInitialized()
+    {
+        loading = true;
+        StateHasChanged();
+
+        _initialItems = await fetchNews(1, pageSize);
+
+        loading = false;
+        StateHasChanged();
+    }
+
+    private async Task<IEnumerable<INews>> fetchNews(int page, int size)
+    {
+        IEnumerable<INews> _feed = new List<INews>();
+
+        if (Feed == "calendar")
+        {
+            var results = await eventsRepo.GetEventsAsync(archived: false, page, size);
+            _feed = results.Items;
+            pageSize = results.PageSize;
+            pageCount = results.TotalPages;
+            total = results.TotalItems;
+        }
+        else if (Feed == "archived")
+        {
+            var results = await eventsRepo.GetEventsAsync(archived: true, page, size);
+            _feed = results.Items;
+            pageSize = results.PageSize;
+            pageCount = results.TotalPages;
+            total = results.TotalItems;
+        }
+        else if (Feed == "spotlights")
+        {
+            var results = await spotsRepo.GetSpotsAsync(page, size);
+            _feed = results.Items;
+            pageSize = results.PageSize;
+            pageCount = results.TotalPages;
+            total = results.TotalItems;
+        }
+        else
+        {
+            _feed = await Task.FromResult(new List<INews>());
+        }
+
+        return _feed;
+    }
+}

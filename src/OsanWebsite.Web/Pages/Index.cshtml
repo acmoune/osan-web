@@ -1,0 +1,83 @@
+﻿@page "{feed?}"
+@model IndexModel
+@{
+    ViewData["Title"] = "";
+}
+
+<div class="slide-show">
+    @foreach (var slide in Model.SlideShow.Pictures)
+    {
+        <partial name="_SlideItem" model=@slide />
+    }
+</div>
+
+<div style="margin: 25px 0px;font-size: 12pt;">
+    Nous vous invitons à la découverte de l'excellence culinaire et vinicole chez <strong style="color:#db0842">O’SAN</strong>. Ouvert tous les jours à partir de midi,
+    notre établissement vous propose une cuisine raffinée et une sélection de vins labélisés. Plongez dans une expérience gastronomique 
+    unique où chaque plat raconte une histoire, accompagné d'un verre du cépage de notre cave où la température, la ventilation, 
+    l’humidité et la luminosité de chaque bouteille soigneusement sélectionnée sont contrôlés. Bienvenue chez <strong style="color:#db0842">O’SAN</strong>, où le plaisir de la table
+    prend tout son sens.
+</div>
+
+<div id="feed-header" class="feed-header">
+    @if (@Model.Feed == "calendar")
+    {
+        <span class="feed-menu">CALENDRIER</span>
+    }
+    else
+    {
+        <a href="/?feed=calendar" class="feed-menu">CALENDRIER</a>
+    }
+
+    @if (@Model.Feed == "archived")
+    {
+        <span class="feed-menu">ARCHIVES</span>
+    }
+    else
+    {
+        <a href="/?feed=archived" class="feed-menu">ARCHIVES</a>
+    }
+
+    @if (@Model.Feed == "spotlights")
+    {
+        <span class="feed-menu">SPOTLIGHTS</span>
+    }
+    else
+    {
+        <a href="/?feed=spotlights" class="feed-menu">SPOTLIGHTS</a>
+    }
+</div>
+
+<br />
+
+<component type="typeof(OsanWebsite.Web.Components.NewsFeed)" param-Feed="@Model.Feed" render-mode="Server" />
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.slide-show').slick({
+                dots: true,
+                arrows: false,
+                autoplay: true,
+                autoplaySpeed: 5000,
+            });
+
+            var feedHeader = document.getElementById("feed-header");
+            var sticky = feedHeader.offsetTop;
+
+            function shouldStickFeedHeader() {
+                if (window.pageYOffset > sticky) {
+                    feedHeader.classList.add("sticky");
+                    document.body.classList.add("sticky-body");
+                } else {
+                    feedHeader.classList.remove("sticky");
+                    document.body.classList.remove("sticky-body");
+                }
+            }
+
+            window.onscroll = function () { shouldStickFeedHeader() };
+        });
+    </script>
+
+    <script src="_framework/blazor.server.js"></script>
+}

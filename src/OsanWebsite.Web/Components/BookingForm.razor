@@ -1,0 +1,156 @@
+﻿@inject IBookingService bookingService
+@inject IBookingRepository _repo
+@inject AlertService Alert
+
+<div>
+    <EditForm @ref="form" Model="_booking" OnValidSubmit="onSubmit">
+        <FluentValidationValidator />
+
+        <div class="form-container">
+            <p>
+                <label>Nom</label>
+                <InputText @bind-Value=_booking.CustomerName class="form-control" style="font-size: 12pt;" />
+                <ValidationMessage For=@(() => _booking.CustomerName) />
+            </p>
+
+            <p>
+                <label>Téléphone &nbsp; <span class="fa fa-phone"></span> <span class="fa-brands fa-whatsapp"></span></label>
+                <InputText @bind-Value=_booking.CustomerPhone class="form-control" style="font-size: 12pt;" />
+                <ValidationMessage For=@(() => _booking.CustomerPhone) />
+            </p>
+
+            <p>
+                <label>Email</label>
+                <InputText @bind-Value=_booking.CustomerEmail class="form-control" style="font-size: 12pt;" />
+                <div style="font-style:italic">* Vous recevrez votre code de réservation par mail</div>
+                <ValidationMessage For=@(() => _booking.CustomerEmail) />
+            </p>
+        </div>
+
+        <div class="form-container container" style="padding:10px;">
+            <p>
+                <label>Date</label>
+                <InputDate @bind-Value=_booking.BookingDate class="form-control" style="font-size: 12pt;" />
+                <ValidationMessage For=@(() => _booking.BookingDate) />
+            </p>
+
+            <p>
+                <label>Service</label>
+                <InputSelect @bind-Value=_booking.Service class="form-control" style="font-size: 12pt;">
+                    <option value="">-- Selectionnez un service --</option>
+                    @foreach (var s in _services)
+                    {
+                        <option value="@s.Name">@s.Name (@s.StartTime - @s.EndTime)</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For=@(() => _booking.Service) />
+            </p>
+
+            <p>
+                <label>Table</label>
+                <InputSelect @bind-Value=_booking.TableType class="form-control" style="font-size: 12pt;">
+                    <option value="">-- Selectionnez un type de table --</option>
+                    @foreach (var t in _tableTypes)
+                    {
+                        <option value="@t.Name">@t.NumberOfPlaces places</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For=@(() => _booking.TableType) />
+            </p>
+        </div>
+
+        <button 
+            type="submit" 
+            class="osan-btn" 
+            style="border-width: 0px;"
+            disabled="@processing">
+            @(processing ? "En cours de traitement ..." : "Réserver")
+        </button>
+    </EditForm>
+</div>
+
+<ToastProvider />
+
+@code {
+    private EditForm form = default!;
+    private BookingDto _booking = new();
+    private string? successMessage;
+    private string? errorMessage;
+    private bool processing = false;
+
+    private IEnumerable<Service> _services = Enumerable.Empty<Service>();
+    private IEnumerable<TableType> _tableTypes = Enumerable.Empty<TableType>();
+
+    [Parameter]
+    public string? CampaignId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (CampaignId != null)
+        {
+            var campaign = await _repo.GetCampaign(CampaignId);
+
+            _booking = new()
+            {
+                BookingDate = campaign!.BookingDate.ToDateTime(TimeOnly.Parse("10:00 PM")),
+                Service = campaign.Service.Name,
+            };
+        }
+
+        _services = await _repo.GetServicesAsync();
+        _tableTypes = await _repo.GetTableTypesAsync();
+
+        StateHasChanged();
+    }
+
+    private async void onSubmit()
+    {
+        if (form.EditContext!.Validate())
+        {
+            processing = true;
+            errorMessage = null;
+            successMessage = null;
+            StateHasChanged();
+
+            try
+            {
+                await bookingService.CreateBooking(_booking);
+                successMessage = "Réservation enrégistrée. Nous vous contacterons pour confirmer votre réservation.";
+                errorMessage = null;
+                reset();
+            }
+            catch(Exception e)
+            {
+                errorMessage = e.Message;
+                successMessage = null;
+            }
+            finally
+            {
+                processing = false;
+                StateHasChanged();
+
+                if (successMessage != null)
+                {
+                    await Alert.Info(successMessage);
+                }
+                if (errorMessage != null)
+                {
+                    await Alert.Error(errorMessage);
+                }
+            }
+        }
+    }
+
+    private void reset()
+    {
+        _booking = new()
+        {
+            CustomerName = "",
+            CustomerPhone = "",
+            CustomerEmail = "",
+            BookingDate = null,
+            Service = null,
+            TableType = null,
+        };
+    }
+}

@@ -1,0 +1,144 @@
+﻿@inject DataService Data
+@inject IBookingRepository repo
+@implements IDisposable
+
+@if (Data.SelectedCampaign != null)
+{
+    <div id="booking-list">
+        @if (Data.Bookings != null)
+        {
+            <PaggedList Items="Data.Bookings.Items"
+                        CurrentPage="Data.Bookings.CurrentPage"
+                        PageSize="Data.Bookings.PageSize"
+                        PageCount="Data.Bookings.TotalPages"
+                        Total="Data.Bookings.TotalItems"
+                        OnFetch="Data.FetchBookings"
+                        TItem=BookingItem
+                        Loading=false>
+
+                <EmptyTemplate>
+                    <div class="loading-box">
+                        <span>No booking so far.</span>
+                    </div>
+                </EmptyTemplate>
+
+                <HeaderTemplate>
+                    <div class="list-header">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="cell cell-left">Customer</div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="cell cell-center">Table</div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="cell cell-center">Status</div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="cell cell-center">QR Code</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </HeaderTemplate>
+
+                <ItemTemplate Context="b">
+                    <div class="list-item @(Data.SelectedBooking?.BookingId == b.Booking.BookingId ? "Selected" : "")" @onclick=@(() => selectBooking(b.Booking))>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="cell cell-left">
+                                        <div class="cust-name">@b.Booking.CustomerName</div>
+                                        <div class="cust-details">
+                                            @b.Booking.CustomerPhone - @b.Booking.CustomerEmail
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="cell cell-center">
+                                        <div class="num-places">@b.Booking.TableType.NumberOfPlaces</div>
+                                        <div class="cell-label">Places</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="cell cell-center">
+                                        @if (b.Cancelling || b.Consuming || b.Confirming)
+                                        {
+                                            <Span Class="color:#808080">Working...</Span>
+                                        }
+                                        else
+                                        {
+                                            <div class="booking-status @b.Booking.Status.ToString()">@b.Booking.Status.ToString()</div>
+                                        }  
+                                    </div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="cell cell-center">
+                                        @if (b.Booking.QrCodeUrl != null)
+                                        {
+                                            <img class="qr-code" src="@b.Booking.QrCodeUrl" alt="QR Code" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </PaggedList>
+        }
+    </div>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await Data.FetchBookings(1, 5);
+    }
+
+    private async void OnPropertyChangedHandler(Object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "SelectedCampaign" && Data.SelectedCampaign != null)
+        {
+            await Data.FetchBookings(1, 5);
+        }
+        else
+        {
+            await InvokeAsync(() => StateHasChanged());
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        Data.PropertyChanged += OnPropertyChangedHandler;
+    }
+
+    public void Dispose()
+    {
+        Data.PropertyChanged -= OnPropertyChangedHandler;
+    }
+
+    private void selectBooking(Booking booking)
+    {
+        if (Data.SelectedBooking == null)
+        {
+            Data.SelectedBooking = booking;
+            return;
+        }
+
+        if (Data.SelectedBooking.BookingId == booking.BookingId)
+        {
+            Data.SelectedBooking = null;
+        }
+        else
+        {
+            Data.SelectedBooking = booking;
+        }
+    }
+}

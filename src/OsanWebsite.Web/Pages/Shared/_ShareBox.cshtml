@@ -1,0 +1,16 @@
+﻿@model OsanWebsite.Web.Pages.Shared.ShareBoxModel
+
+<span class="osan-link" style="cursor:pointer;"
+        onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('@Model.Url'), 'facebook-share-dialog', 'width=626,height=436'); return false;">
+    <span class="fa-brands fa-facebook"></span>
+</span>
+
+<span class="osan-link" style="cursor:pointer;"
+        onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('@Model.Text') + '&url='+ encodeURIComponent('@Model.Url'), 'twitter-share-dialog', 'width=626,height=436'); return false;">
+    <span class="fa-brands fa-x-twitter"></span>
+</span>
+
+<span class="osan-link" style="cursor:pointer;"
+      onclick="window.open('https://www.instagram.com/sharer.php?u='+encodeURIComponent('@Model.Url'), 'instagram-share-dialog', 'width=626,height=436'); return false;">
+    <span class="fa-brands fa-instagram"></span>
+</span>

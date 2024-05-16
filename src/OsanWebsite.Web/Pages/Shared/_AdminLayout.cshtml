@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - OSAN Cave</title>
+
+    <link runat="server" rel="shortcut icon" href="~/favicon2.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/favicon2.ico" type="image/ico" />
+
+    <link rel="stylesheet" href="~/css/bootstrap4/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link href="_content/Blazorise.Icons.FontAwesome/v6/css/all.min.css" rel="stylesheet">
+    <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
+    <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/lib/slick-carousel/slick.min.css" />
+    <link rel="stylesheet" href="~/lib/slick-carousel/slick-theme.min.css" />
+    <link rel="stylesheet" href="~/lib/Swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/css/site-admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OsanWebsite.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/slick-carousel/slick.min.js"></script>
+    <script src="~/lib/Swiper/swiper-bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

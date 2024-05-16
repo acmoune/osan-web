@@ -1,0 +1,107 @@
+﻿#booking-list {
+}
+
+.booking-item {
+
+}
+
+    .booking-item:hover {
+
+    }
+
+
+
+.campaign.Opened .campaign-status {
+    color: green;
+}
+
+.campaign.Closed .campaign-status {
+    color: tomato;
+}
+
+.campaign.Selected {
+    background-color: #ecf1f3;
+}
+
+.loading-box {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#booking-list .cell {
+    display: flex;
+    flex-direction: column;
+    height: 70px;
+    align-items: center;
+    padding: 15px;
+    justify-content: center;
+}
+
+#booking-list .cell-left {
+    align-items:flex-start;
+}
+
+#booking-list .list-header {
+    font-weight: bold;
+    background-color: #E7E7E7;
+}
+
+#booking-list .list-item.Selected {
+    background-color: #ecf1f3;
+}
+
+#booking-list .list-item:hover {
+    cursor: pointer;
+}
+
+#booking-list .list-header, #booking-list .list-item {
+    border-bottom: 1px solid #DFDFDF;
+    font-size: 9pt;
+}
+
+.cust-name {
+    font-size: 18pt;
+}
+
+.cust-details {
+    font-size: 9pt;
+}
+
+.num-places {
+    font-size: 18pt;
+}
+
+.booking-status {
+    font-size: 9pt;
+}
+
+    .booking-status.Pending {
+        color:  tomato;
+    }
+
+    .booking-status.Confirmed {
+        color: #3068ce;
+    }
+
+    .booking-status.Cancelled {
+        color: indigo;
+    }
+
+    .booking-status.Consumed {
+        color: #1fb61f
+    }
+
+    .booking-status.NotConsumed {
+        color: orangered;
+    }
+
+    .qr-code {
+        width: 50px;
+        border-radius: 5px;
+        border: 1px solid #DFDFDF;
+    }

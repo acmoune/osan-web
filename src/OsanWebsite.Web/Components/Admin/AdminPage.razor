@@ -1,0 +1,38 @@
+﻿@inject IBookingRepository repo
+
+<div id="admin-bar">
+    <div id="admin-header">
+        <img src="/images/logo-o.png" style="height: 30px" />
+    </div>
+
+    <div id="toolbar">
+        @if (_tableTypes != null)
+        {
+            <Toolbar TableTypes="_tableTypes" />
+        }
+    </div>
+
+    <div id="user"></div>
+</div>
+
+<div id="admin-sidebar">
+    <CampaignList />
+</div>
+
+<div id="admin-body">
+    <BookingList />
+</div>
+
+<ModalProvider />
+<ToastProvider />
+<MessageProvider />
+
+@code {
+    private IEnumerable<TableType>? _tableTypes;
+
+    protected override async void OnInitialized()
+    {
+        _tableTypes = await repo.GetTableTypesAsync();
+        StateHasChanged();
+    }
+}

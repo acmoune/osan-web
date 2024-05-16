@@ -1,0 +1,55 @@
+﻿@inject DataService Data
+@implements IDisposable
+
+<div id="campaign-list">
+    @if (Data.Campaigns != null)
+    {
+        <PaggedList 
+            Items="Data.Campaigns.Items"
+            CurrentPage="Data.Campaigns.CurrentPage"
+            PageSize="Data.Campaigns.PageSize"
+            PageCount="Data.Campaigns.TotalPages"
+            Total="Data.Campaigns.TotalItems"
+            OnFetch="Data.FetchCampaigns"
+            TItem=BookingCampaign
+            Loading=false>
+
+            <EmptyTemplate>
+                <div class="loading-box">
+                    <span>No campaign so far.</span>
+                </div>
+            </EmptyTemplate>
+
+            <ItemTemplate Context="c">
+                <div class="campaign @c.Status.ToString() @(Data.SelectedCampaign == c ? "Selected" : "")" @onclick=@(() => selectCampaign(c))>
+                    <div class="campaign-date">@c.BookingDate.ToString("dd/MM/yyyy")</div>
+                    <div class="campaign-service"><span>@c.Service.Name</span>: @c.Service.StartTime - @c.Service.EndTime</div>
+                    <div>Status: <span class="campaign-status">@c.Status.ToString()</span></div>
+                </div>
+            </ItemTemplate>
+        </PaggedList>
+    }
+</div>
+
+@code {
+    private async void OnPropertyChangedHandler(Object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    protected override async void OnInitialized()
+    {
+        Data.PropertyChanged += OnPropertyChangedHandler;
+        await Data.FetchCampaigns(1, 10);
+    }
+
+    public void Dispose()
+    {
+        Data.PropertyChanged -= OnPropertyChangedHandler;
+    }
+
+    private void selectCampaign(BookingCampaign campaign)
+    {
+        Data.SelectedCampaign = campaign;
+    }
+}

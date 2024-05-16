@@ -1,0 +1,85 @@
+﻿@typeparam TItem
+
+<div class="infinite-list">
+
+    <div class="il-item-list">
+        <Virtualize Items="_items" Context="item" TItem="TItem">
+            @ItemTemplate(item)
+        </Virtualize>
+    </div>
+
+    <div style="height: 80px; display: flex; align-items: center; justify-content:center;font-size: 9pt; padding: 0px 10px;">
+        @if (hasMore() || _loadingMore)
+        {
+            <Button @onclick=fetchMore class="osan-btn" style=@($"display: {shouldDisplayLoadMore()};width:100%;font-size: 8pt")>
+                @if (_loadingMore)
+                {
+                    @LoadingMoreTemplate
+                }
+                else
+                {
+                    <span>Continuer...</span>
+                }
+            </Button>
+
+            <img src="/images/spinner.gif" style="display: @shouldDisplayLoading();width: 16px;" />
+        }
+        else
+        {
+            <div style="text-align:center">Vous êtes à la fin de la liste</div>
+        }
+    </div>
+</div>
+
+@code {
+    private ICollection<TItem> _items = default!;
+    private int _page = 1;
+    private string shouldDisplayLoadMore() => _loadingMore ? "none" : "block";
+    private string shouldDisplayLoading() => _loadingMore ? "block" : "none";
+
+    [Parameter]
+    public IEnumerable<TItem> InitialItems { get; set; } = default!;
+
+    [Parameter]
+    public int PageSize { get; set; }
+
+    [Parameter]
+    public int PageCount { get; set; }
+
+    [Parameter]
+    public int Total { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> ItemTemplate { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment LoadingMoreTemplate { get; set; } = default!;
+
+    [Parameter]
+    public Func<int, int, Task<IEnumerable<TItem>>> OnFetch { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        _items = InitialItems?.ToList() ?? new List<TItem>();
+    }
+
+    private bool hasMore() => _page < PageCount;
+
+    private bool _loadingMore = false;
+
+    private async void fetchMore()
+    {
+        if (hasMore())
+        {
+            _loadingMore = true;
+            StateHasChanged();
+
+            _page += 1;
+            var newItems = await OnFetch(_page, PageSize);
+            _items = _items!.Concat(newItems.ToList()).ToList();
+
+            _loadingMore = false;
+            StateHasChanged();
+        }
+    }
+}

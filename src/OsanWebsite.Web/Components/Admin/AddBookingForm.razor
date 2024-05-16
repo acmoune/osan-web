@@ -1,0 +1,125 @@
+﻿@inject IBookingService bookingService
+@inject AlertService Alert
+@inject IModalService ModalService
+@inject IBookingRepository _repo
+@inject DataService Data
+
+<div>
+    <EditForm @ref="addForm" Model="_booking" OnValidSubmit="onAddSubmit">
+        <FluentValidationValidator />
+
+        <p>
+            <label>Name</label>
+            <InputText @bind-Value=_booking.CustomerName class="form-control" />
+            <ValidationMessage For=@(() => _booking.CustomerName) />
+        </p>
+
+        <p>
+            <label>Phone</label>
+            <InputText @bind-Value=_booking.CustomerPhone class="form-control" />
+            <ValidationMessage For=@(() => _booking.CustomerPhone) />
+        </p>
+
+        <p>
+            <label>Email</label>
+            <InputText @bind-Value=_booking.CustomerEmail class="form-control" />
+            <ValidationMessage For=@(() => _booking.CustomerEmail) />
+        </p>
+
+        <p>
+            <label>Table</label>
+            <InputSelect @bind-Value=_booking.TableType class="form-control">
+                <option value="">-- Selectionnez un type de table --</option>
+                @foreach (var t in TableTypes)
+                {
+                    <option value="@t.Name">@t.NumberOfPlaces places</option>
+                }
+            </InputSelect>
+            <ValidationMessage For=@(() => _booking.TableType) />
+        </p>
+
+        <Div Class="row">
+            <Div Class="col-6">
+                <span class="btn btn-outline-dark btn-sm span-btn"
+                      style="font-size:8pt;width:100%"
+                      @onclick=@(async () => await FormModal.Hide())>
+                    Cancel
+                </span>
+            </Div>
+
+            <Div Class="col-6">
+                <button type="submit"
+                        class="btn btn-primary btn-sm"
+                        style="font-size:8pt;width:100%"
+                        disabled="@processing">
+                    @(processing ? "Processing ..." : "Add")
+                </button>
+            </Div>
+        </Div>
+    </EditForm>
+</div>
+
+@code {
+    private EditForm addForm = default!;
+    private BookingDto _booking = default!;
+    private bool success;
+    private string message = "";
+    private bool processing = false;
+
+    [Parameter]
+    public IEnumerable<TableType> TableTypes { get; set; } = default!;
+
+    [Parameter]
+    public Action<bool, string> OnClose { get; set; } = default!;
+
+    [CascadingParameter(Name = "FormModal")]
+    public Modal FormModal { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        reset();
+    }
+
+    private void reset()
+    {
+        _booking = new BookingDto
+        {
+            CustomerName = "",
+            CustomerEmail = "",
+            CustomerPhone = "",
+            BookingDate = Data.SelectedCampaign!.BookingDate.ToDateTime(TimeOnly.Parse("06:00")),
+            Service = Data.SelectedCampaign!.Service.Name,
+            TableType = null,
+        };
+    }
+
+    private async void onAddSubmit()
+    {
+        if (addForm.EditContext!.Validate())
+        {
+            processing = true;
+            success = false;
+            message = "";
+            StateHasChanged();
+
+            try
+            {
+                await Data.AddBookingThunk(_booking);
+                message = "Booking sucessfully added.";
+                success = true;
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+                success = false;
+            }
+            finally
+            {
+                processing = false;
+                reset();
+                StateHasChanged();
+                OnClose(success, message);
+            }
+        }
+    }
+}

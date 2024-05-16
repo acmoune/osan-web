@@ -1,0 +1,22 @@
+﻿.ho-service {
+    font-size: 8pt;
+    margin-bottom: 15px;
+}
+
+.ho-service-name {
+}
+
+.show-box-sm {
+    margin-top: 10px;
+    font-size: 8pt;
+
+}
+
+.show-box-title a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.show-box-sm img {
+    border-radius: 5px;
+}

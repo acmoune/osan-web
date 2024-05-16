@@ -1,0 +1,120 @@
+﻿@page "/a-propos"
+@model OsanWebsite.Web.Pages.AboutPageModel
+@{
+    ViewData["Title"] = "A Propos";
+}
+
+<div class="mob-only">
+    <div style="text-align: center;">
+        <img src="images/logo.png" style="width: 200px;border-radius:10px;border: 1px solid #e1bbc5" />
+    </div>
+
+    <div class="ho-sidebar-header">
+        <span style="font-size:8pt;color: #db0842">CAVE À VIN . RESTAURANT . PIANO BAR</span>
+    </div>
+</div>
+
+<div class="mob-only" style="margin: 25px 0px">
+    <partial name="_YoutubePlayer" model="@OsanWebsite.Core.Helpers.MediaHelpers.YoutubeVideoLink("8815U0EPXeI")" />
+</div>
+
+<div class="mob-only">
+    <div style="text-align:center; font-size: 9pt; border: 1px solid #e1bbc5;border-radius:10px;padding: 15px;padding-bottom:0px;margin-bottom: 25px;">
+        <div style="text-align:center;padding-top: 0px; color: #db0842;margin-bottom: 10px;">
+            HEURES ET SERVICES
+        </div>
+
+        @foreach (var service in Model.Services)
+        {
+            <div>
+                <div style="color: #db0842;"><strong>@service.Name</strong> . @service.StartTime.ToString("HH:mm") - @(service.EndTime.ToString("HH:mm") == "00:00" ? "Fermeture" : service.EndTime.ToString("HH:mm"))</div>
+
+                @if (!String.IsNullOrEmpty(service.Description))
+                {
+                    <div class="ho-service-description">@service.Description</div>
+                }
+                <br />
+            </div>
+        }
+    </div>
+
+    <div style="border: 1px solid #e1bbc5;border-radius:10px; margin-top: 25px;font-size: 9pt;padding: 10px;">
+        <div style="color: #db0842;margin-bottom: 10px;text-align:center;">LIVRAISON À DOMICILE</div>
+        <div>
+            Savourez le raffinement d'Osan chez vous ou au bureau. Notre service de livraison à domicile vous propose nos délices culinaires et vins 
+            d'exception, de midi à 23h à Douala 5e, avec des frais de livraison de seulement 1000 F. Commandez dès maintenant pour une expérience 
+            gastronomique unique, où le luxe s'invite chez vous.
+        </div>
+
+        <div style="color: #db0842;font-weight:bold;font-size: 10pt;margin-top: 10px;text-align:center;"><span class="fa fa-phone"></span> &nbsp; (+237) 692 62 38 85</div>
+    </div>
+
+    <br />
+
+    <div style="display:flex;align-items:center;padding: 10px 0px;font-size: 10pt;">
+        <span class="fa fa-map-marker" style="font-size: 13pt;color: #db0842;"></span>
+        <div style="display:flex; flex-direction:column;flex-grow:1;text-align:center;">
+            <span>Douala - Bonamoussadi</span>
+            <span><strong>Lat</strong>: 4.08825, <strong>Lon</strong>: 9.74669</span>
+        </div>
+    </div>
+
+    <a href="https://maps.app.goo.gl/fpX2WDr3ntMLj7sa9" target="_blank" class="osan-btn" style="margin-bottom: 10px;">Voir sur Google Maps &nbsp; &nbsp; <span class="fa fa-external-link"></span></a>
+
+    <div style="padding: 10px 0px; font-size: 10pt;">
+        <div style="display:flex;align-items:center;">
+            <span class="fa fa-phone" style="font-size: 13pt;color: #db0842;"></span>
+            <div style="text-align:center;flex-grow:1;">
+                (+237) 692 62 38 85
+            </div>
+        </div>
+
+        <br />
+
+        <div style="display:flex;align-items:center;">
+            <span class="fa-brands fa-whatsapp" style="font-size: 13pt;color: #db0842;"></span>
+            <div style="text-align:center;flex-grow:1;">
+                (+237) 692 62 38 85
+            </div>
+        </div>
+
+        <br />
+
+        <div style="display:flex;align-items:center;">
+            <span class="fa fa-envelope" style="font-size: 13pt;color: #db0842;"></span>
+            <div style="text-align:center;flex-grow:1;">
+                infos@osancave.com
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div style="display:flex; justify-content: space-evenly; font-size: 16pt;padding: 5px 0px; border-bottom: 1px solid #e1bbc5; border-top: 1px solid #e1bbc5">
+        <a href="https://www.facebook.com/loungeosan" target="_blank" class="osan-link"><span class="fa-brands fa-facebook"></span></a>
+        <a href="https://www.instagram.com/loungeosan" target="_blank" class="osan-link"><span class="fa-brands fa-instagram"></span></a>
+        <a href="https://twitter.com/OSANCave" target="_blank" class="osan-link"><span class="fa-brands fa-x-twitter"></span></a>
+        <a href="@("https://www.youtube.com/@osancave")" class="osan-link" target="_blank"><span class="fa-brands fa-youtube"></span></a>
+    </div>
+
+    @if (Model.NextEvent != null)
+    {
+        <br />
+        <div style="font-size: 9pt;margin:10px 0px; text-align: center;">
+            PROCHAIN ÉVÈNEMENT
+        </div>
+
+        <div>
+            <img src="@Model.NextEvent.GetImageUrl()" style="width:100%; border-radius: 10px;" />
+            <div style="margin: 5px 0px; font-size:9pt; text-align: center;border-bottom: 1px solid #e1bbc5">
+                <div style="font-weight:bold;"><a href="@Model.NextEvent.GetUrl()" class="osan-link">@Model.NextEvent.Title</a></div>
+                <div>@Model.NextEvent.Date.ToString("dd/MM/yyyy") - @Model.NextEvent.Service.Name</div>
+                <br />
+            </div>
+        </div>
+    }
+
+    <div style="font-size: 8pt;padding: 10px 0px; margin-top: 5px;text-align: center">
+        &copy; @System.DateTime.Now.Year O'SAN Cave
+    </div>
+</div>

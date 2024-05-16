@@ -1,0 +1,60 @@
+﻿@page "/spots/{slug}"
+@model OsanWebsite.Web.Pages.SpotModel
+@{
+    ViewData["Title"] = Model.Spot.Title;
+}
+
+@section metatags {
+    <meta name="description" content="@Model.Spot.Title" />
+    <meta name="keywords" content="@(Model.Spot.Keywords ?? "")" />
+    @* Social Media Tags *@
+    <meta property="og:title" content="@Model.Spot.Title" />
+    <meta property="og:url" content="@Model.Spot.GetUrl()" />
+    <meta property="og:description" content="@Model.Spot.Description" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="osancave.com" />
+    <meta property="og:image" content="@Model.Spot.GetImageUrl()" />
+    <meta property="twitter:card" content="summary_large_image" />
+}
+
+<div class="news-container" style="margin-top:0px;">
+    @if (Model.Spot.IsVideo)
+    {
+        <partial name="_YoutubePlayer" model="OsanWebsite.Core.Helpers.MediaHelpers.YoutubeVideoLink(Model.Spot.YoutubeVideoId!)" />
+    }
+    else
+    {
+        <img src="@Model.Spot.GetImageUrl()" />
+    }
+    
+    <div class="news-details">
+        <div class="news-content">
+            <div class="news-title"><span class="link-danger" style="text-decoration:none;">@Model.Spot.Title</span></div>
+            <div class="news-time">@Model.Spot.Date</div>
+        </div>
+
+        <div class="news-footer">
+            <span style="flex-grow:1; text-align:right;font-size:8pt;">Partager</span>
+
+            <partial name="_ShareBox"
+                     model=@(new OsanWebsite.Web.Pages.Shared.ShareBoxModel { Url = $"{Environment.GetEnvironmentVariable("SITE_BASE")}{@Model.Spot.GetUrl()}", Text = Model.Spot.Description! })>
+            </partial>
+        </div>
+
+        @if (Model.Spot.Body != null)
+        {
+            <div class="news-description">
+                @Html.Raw(Markdig.Markdown.ToHtml(Model.Spot.Body))
+            </div>
+        }
+    </div>
+</div>
+
+<br />
+
+<div>
+    <div class="fb-comments" data-href=@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{@Model.Spot.GetUrl()}") data-width="100%" data-numposts="10" data-colorscheme="dark"></div>
+</div>
+
+<br />

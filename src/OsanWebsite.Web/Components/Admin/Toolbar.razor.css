@@ -1,0 +1,29 @@
+﻿#toolbar {
+    font-size: 9pt;
+}
+
+.toolbar-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.toolbar-box button {
+    font-size: 8pt !important;
+    margin-right: 5px;
+}
+
+.box-body {
+    display: flex;
+    align-items: center;
+}
+
+.box-label {
+    display: flex;
+    flex-direction: column;
+    font-size: 8pt;
+    font-weight: bold;
+    margin-right: 10px;
+    justify-content: center;
+}

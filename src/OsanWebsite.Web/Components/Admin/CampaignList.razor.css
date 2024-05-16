@@ -1,0 +1,42 @@
+﻿#campaign-list {
+}
+
+.campaign {
+    font-size: 8pt;
+    margin: 5pt;
+    padding: 5pt;
+    border: 1px solid #DFDFDF;
+    border-radius: 5px;
+}
+
+.campaign:hover {
+    cursor: pointer;
+    border: 1px solid lightblue;
+}
+
+.campaign-date {
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+.campaign.Opened .campaign-status {
+    color:green;
+}
+
+.campaign.Closed .campaign-status {
+    color: tomato;
+}
+
+.campaign.Selected {
+    background-color: #ecf1f3;
+}
+
+.loading-box {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,48 @@
+﻿@model SideContentModel
+
+<div style="padding-top:10px;">
+    <div style="border: 1px solid #e1bbc5;border-radius:10px;padding: 15px;padding-bottom:0px;margin-bottom: 15px;">
+        <div class="ho-sidebar-header" style="text-align: left;padding-top: 0px; color: #db0842;">
+            HEURES ET SERVICES
+        </div>
+
+        @foreach (var service in Model.Services)
+        {
+            <div class="ho-service">
+                <div class="ho-service-name" style="color: #db0842;"><strong>@service.Name</strong> . @service.StartTime.ToString("HH:mm") - @(service.EndTime.ToString("HH:mm") == "00:00" ? "Fermeture" : service.EndTime.ToString("HH:mm"))</div>
+                
+                @if (!String.IsNullOrEmpty(service.Description))
+                {
+                    <div class="ho-service-description">@service.Description</div>
+                }
+            </div>
+        }
+    </div>
+
+    <a href="/reservation" class="osan-btn">Réserver une table</a>
+
+    <div style="border: 1px solid #e1bbc5;border-radius:10px; margin-top: 15px;font-size: 9pt;padding: 10px;">
+        <div style="color: #db0842;margin-bottom: 10px;">LIVRAISON À DOMICILE</div>
+        <div>
+            Savourez le raffinement d'Osan chez vous ou au bureau. Notre service de livraison à domicile vous propose nos délices culinaires et vins d'exception, 
+            de midi à 23h à Douala 5e, avec des frais de livraison de seulement 1000 F. Commandez dès maintenant pour une expérience gastronomique unique, 
+            où le luxe s'invite chez vous.
+        </div>
+        <div style="color: #db0842;font-weight:bold;font-size: 10pt;margin-top: 10px;"><span class="fa fa-phone"></span> &nbsp; (+237) 692 62 38 85</div>
+    </div>
+
+    @if (Model.NextEvent != null)
+    {
+        <div style="font-size: 9pt;margin-top: 15px;">
+            <span class="fa fa-chevron-right"></span> PROCHAIN ÉVÈNEMENT
+        </div>
+
+        <div class="show-box-sm">
+            <img src="@Model.NextEvent.GetImageUrl()" style="width:100%" />
+            <div style="margin: 5px 0px;">
+                <div class="show-box-title"><a href="@Model.NextEvent.GetUrl()" class="osan-link">@Model.NextEvent.Title</a></div>
+                <div class="show-box-time">@Model.NextEvent.Date.ToString("dd/MM/yyyy") - @Model.NextEvent.Service.Name</div>
+            </div>
+        </div>
+    }
+</div>

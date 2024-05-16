@@ -1,0 +1,70 @@
+﻿@page "/events/{slug}"
+@model OsanWebsite.Web.Pages.EventModel
+@{
+    ViewData["Title"] = Model.Event.Title;
+}
+
+@section metatags {
+    <meta name="description" content="@Model.Event.Title" />
+    <meta name="keywords" content="@(Model.Event.Keywords ?? "")" />
+    @* Social Media Tags *@
+    <meta property="og:title" content="@Model.Event.Title" />
+    <meta property="og:url" content="@Model.Event.GetUrl()" />
+    <meta property="og:description" content="@Model.Event.Description" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="osancave.com" />
+    <meta property="og:image" content="@Model.Event.GetImageUrl()" />
+    <meta property="twitter:card" content="summary_large_image" />
+}
+
+<div class="news-container" style="margin-top:0px;">
+    @if (Model.Event.IsVideo)
+    {
+        <partial name="_YoutubePlayer" model="OsanWebsite.Core.Helpers.MediaHelpers.YoutubeVideoLink(Model.Event.YoutubeVideoId!)" />
+    }
+    else
+    {
+        <img src="@Model.Event.GetImageUrl()" />
+    }
+
+    <div class="news-details">
+        <div class="news-content">
+            <div class="news-title"><span class="link-danger" style="text-decoration:none;">@Model.Event.Title</span></div>
+            <div class="news-time">@Model.Event.Date - @Model.Event.Service.Name</div>
+        </div>
+
+        <div class="news-footer">
+            @if (!Model.Event.Archived && Model.Event.Date >= DateOnly.FromDateTime(DateTime.Now))
+            {
+                <a class="reserve-link osan-link" href="/reservation?campaign=@Model.Campaign.Id" style="font-size:10pt;margin-left: 0px;text-decoration:none">Réserver une table</a>
+            }
+            else
+            {
+                <span style="font-size: 9pt;color:#808080;">[Archives]</span>
+            }
+
+            <span style="flex-grow:1; text-align:right;font-size:8pt;">Partager</span>
+
+            <partial 
+                name="_ShareBox" 
+                model=@(new OsanWebsite.Web.Pages.Shared.ShareBoxModel { Url = $"{Environment.GetEnvironmentVariable("SITE_BASE")}{@Model.Event.GetUrl()}", Text = Model.Event.Description! })>
+            </partial>
+        </div>
+
+        @if (Model.Event.Body != null)
+        {
+            <div class="news-description">
+                @Html.Raw(Markdig.Markdown.ToHtml(Model.Event.Body))
+            </div>
+        }
+    </div>
+</div>
+
+<br />
+
+<div style="font-size: 8pt !important;">
+    <div class="fb-comments" data-href=@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{@Model.Event.GetUrl()}") data-width="100%" data-numposts="10" data-colorscheme="dark"></div>
+</div>
+
+<br />

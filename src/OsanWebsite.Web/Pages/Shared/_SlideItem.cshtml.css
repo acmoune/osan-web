@@ -1,0 +1,8 @@
+﻿.slide-item {
+    width: 100%;
+    position: relative;
+}
+
+    .slide-item img {
+        width: 100%;
+    }

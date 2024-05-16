@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(String.IsNullOrEmpty(ViewData["Title"]?.ToString()) ? "O'SAN Cave" : $"{ViewData["Title"]} - O'SAN Cave")</title>
+
+    <link runat="server" rel="shortcut icon" href="~/favicon2.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/favicon2.ico" type="image/ico" />
+
+
+    @RenderSection("metatags", required: false)
+
+    <link rel="stylesheet" href="~/css/bootstrap4/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link href="_content/Blazorise.Icons.FontAwesome/v6/css/all.min.css" rel="stylesheet">
+    <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
+    <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/lib/slick-carousel/slick.min.css" />
+    <link rel="stylesheet" href="~/lib/slick-carousel/slick-theme.min.css" />
+    <link rel="stylesheet" href="~/lib/Swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/news.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OsanWebsite.Web.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" nonce="IuMkBFNZ"></script>
+
+    <div id="sidebar">
+        <div id="sidebar-content" class="ho-sidebar" style="padding-top: 10px !important;">
+            <partial name="_Sidebar" />
+        </div>
+    </div>
+
+    <div id="content">
+        <div id="main-content">
+            <div id="navbar">
+                <div id="navbar-body">
+                    <span style="font-size: 12pt;flex-grow:1;color:white;">O'SAN Cave</span>
+                    <a href="/" class="osan-btn" style="display: inline; width:auto;margin-right: 5px;padding: 5px 10px;"><span class="fa fa-home" /></a>
+                    <a href="/a-propos" class="osan-btn" style="display: inline; width:auto;margin-right: 5px;padding: 5px 10px;">À propos</a>
+                    <a href="/reservation" class="osan-btn" style="display: inline; width:auto;padding: 5px 10px;">Réserver</a>
+                </div>
+            </div>
+
+            <div id="content-body">
+                @RenderBody()
+            </div>
+        </div>
+
+        <div id="side-content" class="ho-sidebar">
+            <div class="sticky-top">
+                <vc:side-content />
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/slick-carousel/slick.min.js"></script>
+    <script src="~/lib/Swiper/swiper-bundle.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

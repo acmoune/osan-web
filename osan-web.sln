@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4CCAC5A8-BB6C-4983-BAAC-6676FD681441}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsanWebsite.Core", "src\OsanWebsite.Core\OsanWebsite.Core.csproj", "{C9B39243-3C06-493F-957B-3156E03979A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsanWebsite.Web", "src\OsanWebsite.Web\OsanWebsite.Web.csproj", "{6CF6E323-D87D-4CAD-BB9D-D9E6A4AB2972}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9B39243-3C06-493F-957B-3156E03979A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9B39243-3C06-493F-957B-3156E03979A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9B39243-3C06-493F-957B-3156E03979A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9B39243-3C06-493F-957B-3156E03979A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CF6E323-D87D-4CAD-BB9D-D9E6A4AB2972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CF6E323-D87D-4CAD-BB9D-D9E6A4AB2972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CF6E323-D87D-4CAD-BB9D-D9E6A4AB2972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF6E323-D87D-4CAD-BB9D-D9E6A4AB2972}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C9B39243-3C06-493F-957B-3156E03979A2} = {4CCAC5A8-BB6C-4983-BAAC-6676FD681441}
+		{6CF6E323-D87D-4CAD-BB9D-D9E6A4AB2972} = {4CCAC5A8-BB6C-4983-BAAC-6676FD681441}
+	EndGlobalSection
+EndGlobal

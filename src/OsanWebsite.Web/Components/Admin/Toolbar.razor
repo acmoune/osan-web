@@ -1,0 +1,215 @@
+﻿@inject DataService Data
+@inject IModalService ModalService
+@inject IMessageService MessageService
+@inject AlertService Alert
+
+@if (Data.SelectedCampaign != null)
+{
+    <div id="toolbar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <div class="toolbar-box">
+                        <div class="box-body">
+                            <div class="box-label">
+                                <Span>@Data.SelectedCampaign.BookingDate.ToString("dd/MM/yyyy") - @Data.SelectedCampaign.Service.Name</Span>
+                            </div>
+                            <button class="btn btn-primary btn-sm" disabled=@AddBookingButtonIsDisabled() @onclick=showAddWindow>Add Booking</button>
+                            <button class="btn btn-primary btn-sm" disabled=@CloseCampaignButtonIsDisabled() @onclick=showCloseCampaignMessage>Close Campaign</button>
+                            <button class="btn btn-primary btn-sm" disabled=@CompleteCampaignButtonIsDisabled() @onclick=showCompleteCampaignMessage>Complete Campaign</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    @if (Data.SelectedBooking != null)
+                    {
+                        <div class="toolbar-box">
+                            <div class="box-body">
+                                <button class="btn btn-primary btn-sm" disabled=@EditBookingButtonIsDisabled() @onclick=showEditWindow>Edit</button>
+                                <button class="btn btn-primary btn-sm" disabled=@ConfirmBookingButtonIsDisabled() @onclick=showConfirmMessage>Confirm</button>
+                                <button class="btn btn-primary btn-sm" disabled=@CancelBookingButtonIsDisabled() @onclick=showCancelMessage>Cancel</button>
+                                <button class="btn btn-primary btn-sm" disabled=@ConsumedBookingButtonIsDisabled() @onclick=showConsumedMessage>Mask asConsumed</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Data.SelectedBooking != null)
+{
+    <Modal @ref="editModal" Closing=@ModalClosing>
+        <ModalContent>
+            <ModalHeader>
+                <ModalTitle>Edit Booking</ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+                <CascadingValue Name="FormModal" Value="editModal">
+                    <BookingUpdateForm Booking="Data.SelectedBooking!" TableTypes="TableTypes" OnClose="editCallback" />
+                </CascadingValue>
+            </ModalBody>
+        </ModalContent>
+    </Modal>
+}
+
+@if (Data.SelectedCampaign != null)
+{
+    <Modal @ref="addModal" Closing=@ModalClosing>
+        <ModalContent>
+            <ModalHeader>
+                <ModalTitle>Add Booking</ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+                <CascadingValue Name="FormModal" Value="addModal">
+                    <AddBookingForm TableTypes="TableTypes" OnClose="addCallback" />
+                </CascadingValue>
+            </ModalBody>
+        </ModalContent>
+    </Modal>
+}
+
+@code {
+    bool toastVisible = false;
+
+    private Modal? editModal;
+    private Modal? addModal;
+
+    [Parameter]
+    public IEnumerable<TableType> TableTypes { get; set; } = default!;
+
+    private Task showEditWindow()
+    {
+        return editModal!.Show();
+    }
+
+    private Task showAddWindow()
+    {
+        return addModal!.Show();
+    }
+
+    private Task ModalClosing(ModalClosingEventArgs args)
+    {
+        args.Cancel = args.CloseReason != CloseReason.UserClosing;
+        return Task.CompletedTask;
+    }
+
+    private async Task showConfirmMessage()
+    {
+        if (await MessageService.Confirm("Are you sure you want to confirm this booking?", "Confirm Booking", opts =>
+        {
+            opts.ConfirmButtonText = "Yes";
+            opts.CancelButtonText = "No";
+            opts.ShowCloseButton = false;
+        }))
+        {
+            await Data.ConfirmBookingThunk(Data.SelectedBooking!.BookingId);
+        }
+    }
+
+    private async Task showCancelMessage()
+    {
+        if (await MessageService.Confirm("Are you sure you want to cancel this booking?", "Cancel Booking", opts =>
+        {
+            opts.ConfirmButtonText = "Yes";
+            opts.CancelButtonText = "No";
+            opts.ShowCloseButton = false;
+        }))
+        {
+            await Data.CancelBookingThunk(Data.SelectedBooking!.BookingId);
+        }
+    }
+
+    private async Task showConsumedMessage()
+    {
+        if (await MessageService.Confirm("Are you sure you want to mark this booking as Consumed?", "Mark Booking as Consumed", opts =>
+        {
+            opts.ConfirmButtonText = "Yes";
+            opts.CancelButtonText = "No";
+            opts.ShowCloseButton = false;
+        }))
+        {
+            await Data.ConsumeBookingThunk(Data.SelectedBooking!.BookingId);
+        }
+    }
+
+    private async Task showCloseCampaignMessage()
+    {
+        if (await MessageService.Confirm("Are you sure you want to close this campaign?", "Close Campaign", opts =>
+        {
+            opts.ConfirmButtonText = "Yes";
+            opts.CancelButtonText = "No";
+            opts.ShowCloseButton = false;
+        }))
+        {
+            await Data.CloseCampaignThunk(Data.SelectedCampaign!.Id!);
+        }
+    }
+
+    private async Task showCompleteCampaignMessage()
+    {
+        if (await MessageService.Confirm("Are you sure you want to complete this campaign?", "Complete Campaign", opts =>
+        {
+            opts.ConfirmButtonText = "Yes";
+            opts.CancelButtonText = "No";
+            opts.ShowCloseButton = false;
+        }))
+        {
+            await Data.CompleteCampaignThunk(Data.SelectedCampaign!.Id!);
+        }
+    }
+
+    private async void editCallback(bool success, string message)
+    {
+        await editModal!.Hide();
+
+        if (success)
+        {
+            await Alert.Info(message);
+        }
+        else
+        {
+            await Alert.Error(message);
+        }
+    }
+
+    private async void addCallback(bool success, string message)
+    {
+        await addModal!.Hide();
+
+        if (success)
+        {
+            await Alert.Info(message);
+        }
+        else
+        {
+            await Alert.Error(message);
+        }
+    }
+
+    private async void OnPropertyChangedHandler(Object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    protected override void OnInitialized()
+    {
+        Data.PropertyChanged += OnPropertyChangedHandler;
+    }
+
+    public void Dispose()
+    {
+        Data.PropertyChanged -= OnPropertyChangedHandler;
+    }
+
+    private bool AddBookingButtonIsDisabled() => Data.SelectedCampaign?.Status != BookingCampaignStatus.Opened;
+    private bool CloseCampaignButtonIsDisabled() => Data.SelectedCampaign?.Status != BookingCampaignStatus.Opened;
+    private bool CompleteCampaignButtonIsDisabled() => Data.SelectedCampaign?.Status != BookingCampaignStatus.Closed;
+
+    private bool EditBookingButtonIsDisabled() => Data.SelectedBooking?.Status != BookingStatus.Pending;
+    private bool ConfirmBookingButtonIsDisabled() => Data.SelectedBooking?.Status != BookingStatus.Pending;
+    private bool CancelBookingButtonIsDisabled() => Data.SelectedBooking?.Status != BookingStatus.Pending;
+    private bool ConsumedBookingButtonIsDisabled() => (Data.SelectedBooking?.Status != BookingStatus.Confirmed) || (Data.SelectedBooking?.Status == BookingStatus.Consumed);
+}
