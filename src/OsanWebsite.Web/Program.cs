@@ -5,6 +5,7 @@ using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.Newtonsoft;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.ResponseCompression;
 using OsanWebsite.Core.Infrastructure;
 using OsanWebsite.Core.Models;
 using OsanWebsite.Core.Repositories;
@@ -16,6 +17,14 @@ using OsanWebsite.Web.Components.Admin;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Fastest);
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.Providers.Add<GzipCompressionProvider>();
+    options.EnableForHttps = true;
+});
 
 builder.Services.AddSingleton<IGraphQLClient>(sp =>
 {
@@ -37,7 +46,7 @@ builder.Services.AddAuthentication(options =>
     .AddCookie("Cookies")
     .AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = "https://localhost:5001";
+        options.Authority = Environment.GetEnvironmentVariable("AUTHORITY");
         options.ClientId = "Web";
         options.ClientSecret = "8cfc91c9-350d-42dc-886e-a918d4c57749";
         options.ResponseType = "code";
@@ -103,6 +112,7 @@ builder.Services.AddScoped<AlertService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseResponseCompression(); // SignalR Guidelines
@@ -113,6 +123,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseResponseCompression();
 
 app.UseStaticFiles();
 

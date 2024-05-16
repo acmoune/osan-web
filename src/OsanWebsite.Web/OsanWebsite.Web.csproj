@@ -16,6 +16,7 @@
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.0" />
     <PackageReference Include="Markdig" Version="0.37.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
