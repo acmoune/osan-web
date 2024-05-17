@@ -9,12 +9,12 @@
     <meta name="keywords" content="@(Model.Event.Keywords ?? "")" />
     @* Social Media Tags *@
     <meta property="og:title" content="@Model.Event.Title" />
-    <meta property="og:url" content="@Model.Event.GetUrl()" />
+    <meta property="og:url" content=@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{Model.Event.GetUrl()}") />
     <meta property="og:description" content="@Model.Event.Description" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="osancave.com" />
-    <meta property="og:image" content="@Model.Event.GetImageUrl()" />
+    <meta property="og:image" content=@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{Model.Event.GetImageUrl()}") />
     <meta property="twitter:card" content="summary_large_image" />
 }
 
