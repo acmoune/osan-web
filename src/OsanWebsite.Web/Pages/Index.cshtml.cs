@@ -19,7 +19,7 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync(string? feed)
     {
-        Feed = feed ?? "calendar";
+        Feed = feed ?? "spotlights";
         SlideShow = await _picturesRepo.GetSlides();
     }
 }
