@@ -37,7 +37,22 @@
     }
     else
     {
-        <span>No Items</span>
+        <div style="font-size: 9pt; color: #808080;padding: 40px;padding-bottom: 100px;text-align:center;">
+            @if (Feed == "spotlights")
+            {
+                <div>Aucun spot pour le moment.</div>
+            }
+
+            @if (Feed == "calendar")
+            {
+                <div>Pas d'évènement en vue. Abonnez vous sur nos pages Facebook/Insta/Twitter pour rester informé.</div>
+            }
+
+            @if (Feed == "archived")
+            {
+                <div>Aucune archive pour le moment.</div>
+            }
+        </div>
     }
 </div>
 

@@ -35,6 +35,15 @@
 <br />
 
 <div id="feed-header" class="feed-header">
+    @if (@Model.Feed == "spotlights")
+    {
+        <span class="feed-menu">SPOTLIGHTS</span>
+    }
+    else
+    {
+        <a href="/?feed=spotlights" class="feed-menu">SPOTLIGHTS</a>
+    }
+
     @if (@Model.Feed == "calendar")
     {
         <span class="feed-menu">CALENDRIER</span>
@@ -51,15 +60,6 @@
     else
     {
         <a href="/?feed=archived" class="feed-menu">ARCHIVES</a>
-    }
-
-    @if (@Model.Feed == "spotlights")
-    {
-        <span class="feed-menu">SPOTLIGHTS</span>
-    }
-    else
-    {
-        <a href="/?feed=spotlights" class="feed-menu">SPOTLIGHTS</a>
     }
 </div>
 
