@@ -4,6 +4,10 @@
     ViewData["Title"] = "A Propos";
 }
 
+<div class="desk-only">
+    <h4>À propos</h4>
+</div>
+
 <div class="mob-only">
     <div style="text-align: center;">
         <img src="images/logo.png" style="width: 200px;border-radius:10px;border: 1px solid #e1bbc5" />
@@ -14,8 +18,16 @@
     </div>
 </div>
 
-<div class="mob-only" style="margin: 25px 0px">
+<div style="margin: 25px 0px">
     <partial name="_YoutubePlayer" model="@OsanWebsite.Core.Helpers.MediaHelpers.YoutubeVideoLink("8815U0EPXeI")" />
+</div>
+
+<div style="margin: 25px 0px;font-size: 11pt;">
+    Nous vous invitons à la découverte de l'excellence culinaire et vinicole chez <strong style="color:#db0842">O’SAN</strong>. Ouvert tous les jours à partir de midi,
+    notre établissement vous propose une cuisine raffinée et une sélection de vins labélisés. Plongez dans une expérience gastronomique
+    unique où chaque plat raconte une histoire, accompagné d'un verre du cépage de notre cave où la température, la ventilation,
+    l’humidité et la luminosité de chaque bouteille soigneusement sélectionnée sont contrôlés. Bienvenue chez <strong style="color:#db0842">O’SAN</strong>, où le plaisir de la table
+    prend tout son sens.
 </div>
 
 <div class="mob-only">
