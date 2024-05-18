@@ -8,14 +8,27 @@
     <meta name="description" content="@Model.Spot.Title" />
     <meta name="keywords" content="@(Model.Spot.Keywords ?? "")" />
     @* Social Media Tags *@
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@Model.Spot.Title" />
+    <meta name="twitter:description" content="@Model.Spot.Description" />
+    <meta name="twitter:url" content="@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{Model.Spot.GetUrl()}")" />
+    <meta name="twitter:image" content="@($"{Model.Spot.GetImageUrl()}")" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="O'SAN Cave" />
+    <meta name="twitter:site" content="@("@OSANCave")" />
+    <meta name="twitter:creator" content="@("@OSANCave")" />
+
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
     <meta property="og:title" content="@Model.Spot.Title" />
-    <meta property="og:url" content=@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{Model.Spot.GetUrl()}") />
+    <meta property="og:url" content="@($"{Environment.GetEnvironmentVariable("SITE_BASE")}{Model.Spot.GetUrl()}")" />
     <meta property="og:description" content="@Model.Spot.Description" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="osancave.com" />
-    <meta property="og:image" content=@($"{Model.Spot.GetImageUrl()}") />
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content="@($"{Model.Spot.GetImageUrl()}")" />
 }
 
 <div class="news-container" style="margin-top:0px;">
