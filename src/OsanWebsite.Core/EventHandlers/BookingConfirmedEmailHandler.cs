@@ -22,7 +22,7 @@ public class BookingConfirmedEmailHandler : INotificationHandler<BookingConfirme
 Nous confirmons votre réservation du {notification.Booking.Campaign.BookingDate}, pour le service {notification.Booking.Campaign.Service.Name}.
 Ce service va de {notification.Booking.Campaign.Service.StartTime} à {notification.Booking.Campaign.Service.EndTime}.
 
-Veuillez télécharger votre PASS (QR Code) à ce lien: {notification.Booking.QrCodeUrl}
+Veuillez télécharger votre PASS (QR Code) en pièce jointe.
 Vous devrez le présenter à l'entrée pour être identifié. Veuillez également le partager à tous ceux qui seront à votre table.
 
 Nous vous disons à bientôt.
@@ -30,6 +30,6 @@ Nous vous disons à bientôt.
 Cordialement,
 OSAN Cave.
 ";
-        await _emailSender.SendMail(to, subject, body);
+        await _emailSender.SendMailWithPng(to, subject, body, notification.Booking.QrCodeUrl!);
     }
 }
