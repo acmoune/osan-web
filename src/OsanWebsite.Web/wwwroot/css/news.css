@@ -44,3 +44,7 @@
     padding: 5px 10px;
     border-top: 1px solid #e1bbc5;
 }
+
+.news-description img {
+    width: 100% !important;
+}
