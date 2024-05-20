@@ -39,7 +39,9 @@
         @foreach (var service in Model.Services)
         {
             <div>
-                <div style="color: #db0842;"><strong>@service.Name</strong> . @service.StartTime.ToString("HH:mm") - @(service.EndTime.ToString("HH:mm") == "00:00" ? "Fermeture" : service.EndTime.ToString("HH:mm"))</div>
+                <div style="color: #db0842;">
+                    @Html.Raw(service.ToHtmlString())
+                </div>
 
                 @if (!String.IsNullOrEmpty(service.Description))
                 {

@@ -19,8 +19,7 @@ public class BookingConfirmedEmailHandler : INotificationHandler<BookingConfirme
         var subject = $"Confirmation de votre réservation ({notification.Booking.Campaign.Name()})";
         var body = $@"Salut {notification.Booking.CustomerName},
 
-Nous confirmons votre réservation du {notification.Booking.Campaign.BookingDate}, pour le service {notification.Booking.Campaign.Service.Name}.
-Ce service va de {notification.Booking.Campaign.Service.StartTime} à {notification.Booking.Campaign.Service.EndTime}.
+Nous confirmons votre réservation du {notification.Booking.Campaign.BookingDate}, pour le service {notification.Booking.Campaign.Service.Name} ({notification.Booking.Campaign.Service.StartTime} - {notification.Booking.Campaign.Service.EndTimeString()}).
 
 Veuillez télécharger votre PASS (QR Code) en pièce jointe.
 Vous devrez le présenter à l'entrée pour être identifié. Veuillez également le partager à tous ceux qui seront à votre table.

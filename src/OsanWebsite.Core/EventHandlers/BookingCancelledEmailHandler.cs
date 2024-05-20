@@ -17,7 +17,6 @@ public class BookingCancelledEmailHandler : INotificationHandler<BookingCancelle
         var body = $@"Salut {notification.Booking.CustomerName},
 
 Votre réservation du {notification.Booking.Campaign.BookingDate}, pour le service {notification.Booking.Campaign.Service.Name} à bien été annulée.
-Raison de l'annulation: [{notification.Booking.CancellationReason}].
 
 Nous espérons vous compter bientôt parmi nous.
 
