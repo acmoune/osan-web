@@ -30,41 +30,7 @@
     prend tout son sens.
 </div>
 
-<div class="mob-only">
-    <div style="text-align:center; font-size: 9pt; border: 1px solid #e1bbc5;border-radius:10px;padding: 15px;padding-bottom:0px;margin-bottom: 25px;">
-        <div style="text-align:center;padding-top: 0px; color: #db0842;margin-bottom: 10px;">
-            HEURES ET SERVICES
-        </div>
-
-        @foreach (var service in Model.Services)
-        {
-            <div>
-                <div style="color: #db0842;">
-                    @Html.Raw(service.ToHtmlString())
-                </div>
-
-                @if (!String.IsNullOrEmpty(service.Description))
-                {
-                    <div class="ho-service-description">@service.Description</div>
-                }
-                <br />
-            </div>
-        }
-    </div>
-
-    <div style="border: 1px solid #e1bbc5;border-radius:10px; margin-top: 25px;font-size: 9pt;padding: 10px;">
-        <div style="color: #db0842;margin-bottom: 10px;text-align:center;">LIVRAISON À DOMICILE</div>
-        <div>
-            Savourez le raffinement d'<strong>O'SAN</strong> chez vous ou au bureau. Notre service de livraison à domicile vous propose nos délices culinaires et vins
-            d'exception, de midi à 23h à Douala 5e, avec des frais de livraison de seulement 1000 F. Commandez dès maintenant pour une expérience 
-            gastronomique unique, où le luxe s'invite chez vous.
-        </div>
-
-        <div style="color: #db0842;font-weight:bold;font-size: 10pt;margin-top: 10px;text-align:center;"><span class="fa fa-phone"></span> &nbsp; (+237) 692 62 38 85</div>
-    </div>
-
-    <br />
-
+<div class="mob-only" style="border-top: 1px solid #e1bbc5">
     <div style="display:flex;align-items:center;padding: 10px 0px;font-size: 10pt;">
         <span class="fa fa-map-marker" style="font-size: 13pt;color: #db0842;"></span>
         <div style="display:flex; flex-direction:column;flex-grow:1;text-align:center;">

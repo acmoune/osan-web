@@ -9,6 +9,10 @@
     {
       "library": "Swiper@11.0.5",
       "destination": "wwwroot/lib/Swiper/"
+    },
+    {
+      "library": "bootstrap@4.6.2",
+      "destination": "wwwroot/lib/bootstrap/"
     }
   ]
 }

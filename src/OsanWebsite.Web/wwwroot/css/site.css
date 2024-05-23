@@ -26,6 +26,21 @@
         text-decoration: none;
     }
 
+.flexed {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.flexed .fa {
+    font-size: 10pt;
+}
+
+.flexed .btn-text {
+    flex-grow: 1;
+    text-align: center;
+}
+
 body {
     background-color: #FFFFFF;
     color: #000000;

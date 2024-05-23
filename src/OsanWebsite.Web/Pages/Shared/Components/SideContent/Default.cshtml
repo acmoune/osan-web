@@ -1,37 +1,31 @@
 ﻿@model SideContentModel
 
 <div style="padding-top:10px;">
-    <div style="border: 1px solid #e1bbc5;border-radius:10px;padding: 15px;padding-bottom:0px;margin-bottom: 15px;">
-        <div class="ho-sidebar-header" style="text-align: left;padding-top: 0px; color: #db0842;">
-            HEURES ET SERVICES
-        </div>
+    <div style="position: relative">
+        <div style="position: absolute;width: 100%; text-align: center; left: 0px; bottom: 50px; font-size: 8pt; color: #540b1c;">
+            <div style="">
+                HEURES ET SERVICES
+            </div>
 
-        @foreach (var service in Model.Services)
-        {
-            <div class="ho-service">
-                <div class="ho-service-name" style="color: #db0842;">
+            @foreach (var service in Model.Services)
+            {
+                <div style="">
                     @Html.Raw(service.ToHtmlString())
                 </div>
-                
-                @if (!String.IsNullOrEmpty(service.Description))
-                {
-                    <div class="ho-service-description">@service.Description</div>
-                }
-            </div>
-        }
-    </div>
-
-    <a href="/a-propos" class="osan-btn" style="margin-bottom:5px;">À propos</a>
-    <a href="/reservation" class="osan-btn">Réserver une table</a>
-
-    <div style="border: 1px solid #e1bbc5;border-radius:10px; margin-top: 15px;font-size: 9pt;padding: 10px;">
-        <div style="color: #db0842;margin-bottom: 10px;">LIVRAISON À DOMICILE</div>
-        <div>
-            Savourez le raffinement d'<strong>O'SAN</strong> chez vous ou au bureau. Notre service de livraison à domicile vous propose nos délices culinaires et vins d'exception, 
-            de midi à 23h à Douala 5e, avec des frais de livraison de seulement 1000 F. Commandez dès maintenant pour une expérience gastronomique unique, 
-            où le luxe s'invite chez vous.
+            }
         </div>
-        <div style="color: #db0842;font-weight:bold;font-size: 10pt;margin-top: 10px;"><span class="fa fa-phone"></span> &nbsp; (+237) 692 62 38 85</div>
+
+        <img src="~/images/osan2.jpg" style="width: 100%; border-top-left-radius: 10px;border-top-right-radius: 10px; border: 1px solid #e1bbc5;" />
+        <div style="border: 1px solid #e1bbc5;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; padding: 10px; background-color: #ffeccc;border-top-width: 0px;">
+            <a href="/reservation" class="osan-btn">Réserver une table</a>
+        </div>
+    </div>     
+
+    <div>
+        <img src="~/images/livraison2.jpg" style="width: 100%; border-top-left-radius: 10px;border-top-right-radius: 10px; border: 1px solid #e1bbc5; margin-top: 15px;" />
+        <div style="border: 1px solid #e1bbc5;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; padding: 10px; background-color: #ffeccc;border-top-width: 0px;">
+            <a href="/livraison" class="osan-btn">Se faire livrer</a>
+        </div>
     </div>
 
     @if (Model.NextEvent != null)
