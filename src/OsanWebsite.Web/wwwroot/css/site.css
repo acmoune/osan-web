@@ -207,6 +207,7 @@ span.feed-menu {
 }
 
 
+
 .ho-sidebar {
     padding: 10px;
     padding-top: 0px;
@@ -282,3 +283,6 @@ span.feed-menu {
         font-size: 9pt !important;
     }
 
+.dropdown-toggle:after {
+    content: none
+}
