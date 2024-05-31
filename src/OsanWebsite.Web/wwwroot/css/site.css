@@ -18,12 +18,12 @@
     }
 
 .osan-link {
-    color: #db0842;
+    color: #ba425e;
     display: block;
 }
 
     .osan-link:hover {
-        color: #bb0538;
+        color: #aa304c;
         text-decoration: none;
     }
 
@@ -139,7 +139,7 @@ span.feed-menu {
 
     #main-content {
         width: 500px;
-        border-left: 1px solid #5c151b;
+        border-left: 1px solid #ba425e;
         border-right: 1px solid #e1bbc5;
         padding: 10px;
         min-height: calc(100vh + 100px);
@@ -182,7 +182,7 @@ span.feed-menu {
 
     #navbar {
         background-color: #ba425e;
-        border-bottom: 1px solid #5c151b;
+        border-bottom: 1px solid #ba425e;
         box-shadow: 0 0 8px -1px rgba(0,0,0,.25);
         width: 100%;
         position: fixed;
