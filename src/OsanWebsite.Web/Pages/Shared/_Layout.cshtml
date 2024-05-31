@@ -4,11 +4,12 @@
     <base href="/" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ba425e" />
+    <meta name="theme-color" content="#ba425e" />
     <title>@(String.IsNullOrEmpty(ViewData["Title"]?.ToString()) ? "O'SAN Cave" : $"{ViewData["Title"]} - O'SAN Cave")</title>
 
     <link runat="server" rel="shortcut icon" href="~/favicon2.ico" type="image/x-icon" />
     <link runat="server" rel="icon" href="~/favicon2.ico" type="image/ico" />
-
 
     @RenderSection("metatags", required: false)
 
@@ -40,7 +41,8 @@
         <div id="main-content">
             <div id="navbar">
                 <div id="navbar-body">
-                    <span style="font-size: 11pt;flex-grow:1;color:white;">O'SAN Cave</span>
+                    <img src="~/images/logo-o-light.png" style="height: 40px;" />
+                    <span style="flex-grow: 1;"></span>
 
                     <a href="/" class="osan-btn" style="display: inline; width:auto;margin-right: 5px;padding: 5px 10px;"><span class="fa fa-home" /></a>
                     <a href="/reservation" class="osan-btn" style="display: inline; width:auto;padding: 5px 10px;margin-right: 5px;">Réserver</a>

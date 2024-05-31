@@ -55,7 +55,7 @@ body {
     display: flex;
     padding-bottom: 0px;
     border-bottom: 1px solid #db0842;
-    z-index: 10000;
+    z-index: 999;
 }
 
 .feed-menu {
