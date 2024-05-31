@@ -5,13 +5,14 @@
     text-align: center;
     border-radius: 5px;
     color: white;
-    background-color: #db0842;
+    background-color: #ba425e;
+    border: 1px solid #de8499;
     display: block;
     font-weight: normal;
 }
 
     .osan-btn:hover {
-        background-color: #bb0538;
+        background-color: #aa304c;
         color: white;
         text-decoration: none;
     }
@@ -54,7 +55,7 @@ body {
 .feed-header {
     display: flex;
     padding-bottom: 0px;
-    border-bottom: 1px solid #db0842;
+    border-bottom: 1px solid #ba425e;
     z-index: 999;
 }
 
@@ -80,8 +81,8 @@ a.feed-menu {
     }
 
 span.feed-menu {
-    background: rgb(219, 8, 66); /* Fallback for older browsers without RGBA-support */
-    background: rgba(219, 8, 66, 0.95);
+    background: rgb(186, 66, 94); /* Fallback for older browsers without RGBA-support */
+    background: rgba(186, 66, 94, 0.95);
     color: white;
 }
 
