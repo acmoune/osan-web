@@ -8,10 +8,10 @@
         </Virtualize>
     </div>
 
-    <div style="height: 80px; display: flex; align-items: center; justify-content:center;font-size: 9pt; padding: 0px 10px;">
+    <div style="height: 80px; display: flex; align-items: center; justify-content:center;font-size: 10pt; padding: 0px 10px;">
         @if (hasMore() || _loadingMore)
         {
-            <Button @onclick=fetchMore class="osan-btn" style=@($"display: {shouldDisplayLoadMore()};width:100%;font-size: 8pt")>
+            <Button @onclick=fetchMore class="osan-btn" style=@($"display: {shouldDisplayLoadMore()};width:100%;font-size: 9pt")>
                 @if (_loadingMore)
                 {
                     @LoadingMoreTemplate

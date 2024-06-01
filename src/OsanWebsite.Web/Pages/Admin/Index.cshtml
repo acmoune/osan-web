@@ -8,7 +8,7 @@
     string lastName = User.Claims.Where(c => c.Type == "family_name").Single().Value;
 }
 
-<div id="account" style="position:fixed; top:0px; right: 0px; width: 150px; height: 40px; display: flex; align-items: center; justify-content:flex-end; padding-right: 15px; color: white; font-size: 8pt; z-index: 1001">
+<div id="account" style="position:fixed; top:0px; right: 0px; width: 150px; height: 40px; display: flex; align-items: center; justify-content:flex-end; padding-right: 15px; color: white; font-size: 9pt; z-index: 1001">
     <div><strong>@firstName @lastName</strong> &nbsp; <a href="/account/signout" style="color: lightsalmon">Logout</a></div>
 </div>
 

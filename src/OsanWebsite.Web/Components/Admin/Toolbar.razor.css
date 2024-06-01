@@ -1,5 +1,5 @@
 ﻿#toolbar {
-    font-size: 9pt;
+    font-size: 10pt;
 }
 
 .toolbar-box {
@@ -10,7 +10,7 @@
 }
 
 .toolbar-box button {
-    font-size: 8pt !important;
+    font-size: 9pt !important;
     margin-right: 5px;
 }
 
@@ -22,7 +22,7 @@
 .box-label {
     display: flex;
     flex-direction: column;
-    font-size: 8pt;
+    font-size: 9pt;
     font-weight: bold;
     margin-right: 10px;
     justify-content: center;

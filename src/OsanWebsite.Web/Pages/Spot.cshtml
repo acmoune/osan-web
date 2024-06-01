@@ -48,7 +48,7 @@
         </div>
 
         <div class="news-footer">
-            <span style="flex-grow:1; text-align:right;font-size:8pt;">Partager</span>
+            <span style="flex-grow:1; text-align:right;font-size:9pt;">Partager</span>
 
             <partial name="_ShareBox"
                      model=@(new OsanWebsite.Web.Pages.Shared.ShareBoxModel { Url = $"{Environment.GetEnvironmentVariable("SITE_BASE")}{@Model.Spot.GetUrl()}", Text = Model.Spot.Description! })>

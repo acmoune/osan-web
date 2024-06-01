@@ -3,7 +3,7 @@
 
 .modal-content {
     color: black;
-    font-size: 8pt !important;
+    font-size: 9pt !important;
 }
 
 .modal-header {
@@ -20,7 +20,7 @@
 }
 
 .modal-body .form-control, .modal-body label {
-    font-size: 9pt !important;
+    font-size: 10pt !important;
 }
 
 .span-btn:hover {
@@ -29,5 +29,5 @@
 
 .validation-message {
     color: tomato;
-    font-size: 8pt;
+    font-size: 9pt;
 }

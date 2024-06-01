@@ -2,7 +2,7 @@
 }
 
 .campaign {
-    font-size: 8pt;
+    font-size: 9pt;
     margin: 5pt;
     padding: 5pt;
     border: 1px solid #DFDFDF;
@@ -15,7 +15,7 @@
 }
 
 .campaign-date {
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: bold;
 }
 

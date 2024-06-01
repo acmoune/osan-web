@@ -14,7 +14,7 @@
     </div>
 
     <div class="ho-sidebar-header">
-        <span style="font-size:8pt;color: #ba425e;font-weight:bold;">CAVE À VIN . RESTAURANT . PIANO BAR</span>
+        <span style="font-size:9pt;color: #ba425e;font-weight:bold;">CAVE À VIN . RESTAURANT . PIANO BAR</span>
     </div>
 </div>
 
@@ -80,13 +80,13 @@
     @if (Model.NextEvent != null)
     {
         <br />
-        <div style="font-size: 9pt;margin:10px 0px; text-align: center;">
+        <div style="font-size: 10pt;margin:10px 0px; text-align: center;">
             PROCHAIN ÉVÈNEMENT
         </div>
 
         <div>
             <img src="@Model.NextEvent.GetImageUrl()" style="width:100%; border-radius: 10px;" />
-            <div style="margin: 5px 0px; font-size:9pt; text-align: center;border-bottom: 1px solid #e1bbc5">
+            <div style="margin: 5px 0px; font-size:10pt; text-align: center;border-bottom: 1px solid #e1bbc5">
                 <div style="font-weight:bold;"><a href="@Model.NextEvent.GetUrl()" class="osan-link">@Model.NextEvent.Title</a></div>
                 <div>@Model.NextEvent.Date.ToString("dd/MM/yyyy") - @Model.NextEvent.Service.Name</div>
                 <br />
@@ -94,7 +94,7 @@
         </div>
     }
 
-    <div style="font-size: 8pt;padding: 10px 0px; margin-top: 5px;text-align: center">
+    <div style="font-size: 9pt;padding: 10px 0px; margin-top: 5px;text-align: center">
         &copy; @System.DateTime.Now.Year O'SAN Cave
     </div>
 </div>

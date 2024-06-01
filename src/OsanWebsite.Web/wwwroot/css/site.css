@@ -1,6 +1,10 @@
+body {
+    font-family: "Quattrocento Sans", sans-serif !important;
+}
+
 .osan-btn {
     width: 100%;
-    font-size: 8pt;
+    font-size: 9pt;
     padding: 4px;
     text-align: center;
     border-radius: 5px;
@@ -66,7 +70,7 @@ body {
     justify-content: center;
     align-items: center;
     color: #808080;
-    font-size: 9pt;
+    font-size: 10pt;
     background: rgb(255,255,255); /* Fallback for older browsers without RGBA-support */
     background: rgba(255,255,255, 0.95);
 }
@@ -216,7 +220,7 @@ span.feed-menu {
 
 .ho-sidebar-header {
     text-align: center;
-    font-size: 9pt;
+    font-size: 10pt;
     padding: 8px 0px;
 }
 
@@ -225,7 +229,7 @@ span.feed-menu {
     border: 1px solid #e1bbc5;
     border-radius: 10px;
     padding: 10px;
-    font-size: 8pt;
+    font-size: 9pt;
     background-color: #ffffff;
 }
 
@@ -233,7 +237,7 @@ span.feed-menu {
         display: block;
         margin-bottom: 4px;
         font-weight: bold;
-        color: #db0842;
+        color: #ba425e;
     }
 
     .form-container label span {
@@ -242,7 +246,7 @@ span.feed-menu {
 
 .validation-message {
     color: tomato;
-    font-size: 8pt;
+    font-size: 9pt;
 }
 
 .youtube-wrapper {
@@ -264,7 +268,7 @@ span.feed-menu {
 
 .modal-content {
     color: black;
-    font-size: 8pt !important;
+    font-size: 9pt !important;
 }
 
 .modal-header {
@@ -281,7 +285,7 @@ span.feed-menu {
 }
 
     .modal-body .form-control, .modal-body label {
-        font-size: 9pt !important;
+        font-size: 10pt !important;
     }
 
 .dropdown-toggle:after {

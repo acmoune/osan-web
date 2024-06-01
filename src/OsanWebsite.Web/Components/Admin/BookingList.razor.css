@@ -61,23 +61,23 @@
 
 #booking-list .list-header, #booking-list .list-item {
     border-bottom: 1px solid #DFDFDF;
-    font-size: 9pt;
+    font-size: 10pt;
 }
 
 .cust-name {
-    font-size: 18pt;
+    font-size: 19pt;
 }
 
 .cust-details {
-    font-size: 9pt;
+    font-size: 10pt;
 }
 
 .num-places {
-    font-size: 18pt;
+    font-size: 19pt;
 }
 
 .booking-status {
-    font-size: 9pt;
+    font-size: 10pt;
 }
 
     .booking-status.Pending {
