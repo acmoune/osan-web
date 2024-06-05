@@ -32,6 +32,25 @@
     </p>
 </div>
 
+<div class="mob-only">
+    @if (Model.NextEvent != null)
+    {
+        <div style="background-color:#ffeccc;border-radius: 10px;padding: 10px;">
+            <div style="font-size: 10pt;text-align:center">
+                PROCHAIN ÉVÈNEMENT
+            </div>
+
+            <div class="show-box-sm">
+                <img src="@Model.NextEvent.GetImageUrl()" style="width:100%;border-radius: 10px;" />
+                <div style="margin-top: 5px; font-size: 9pt;text-align:center;">
+                    <div class="show-box-title" style="font-weight:bold;font-size: 11pt;"><a href="@Model.NextEvent.GetUrl()" class="osan-link">@Model.NextEvent.Title</a></div>
+                    <div class="show-box-time">@Model.NextEvent.Date.ToString("dd/MM/yyyy") - @Model.NextEvent.Service.Name</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
 <br />
 
 <div id="feed-header" class="feed-header">

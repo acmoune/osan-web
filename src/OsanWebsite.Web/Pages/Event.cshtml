@@ -44,13 +44,13 @@
     <div class="news-details">
         <div class="news-content">
             <div class="news-title"><span class="link-danger" style="text-decoration:none;">@Model.Event.Title</span></div>
-            <div class="news-time">@Model.Event.Date - @Model.Event.Service.Name</div>
+            <div class="news-time">@Model.Event.Date.ToString("dd/MM/yyyy") - @Model.Event.Service.Name</div>
         </div>
 
         <div class="news-footer">
             @if (!Model.Event.Archived && Model.Event.Date >= DateOnly.FromDateTime(DateTime.Now))
             {
-                <a class="reserve-link osan-link" href="/reservation?campaign=@Model.Campaign.Id" style="font-size:10pt;margin-left: 0px;text-decoration:none">Réserver une table</a>
+                <a class="reserve-link osan-link" href="/reservation?campaign=@Model.Campaign.Id&slug=@Model.Event.Slug" style="font-size:10pt;margin-left: 0px;text-decoration:none">Réserver une table</a>
             }
             else
             {

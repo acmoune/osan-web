@@ -3,9 +3,10 @@
 <div class="infinite-list">
 
     <div class="il-item-list">
-        <Virtualize Items="_items" Context="item" TItem="TItem">
+        @foreach (var item in _items)
+        {
             @ItemTemplate(item)
-        </Virtualize>
+        }
     </div>
 
     <div style="height: 80px; display: flex; align-items: center; justify-content:center;font-size: 10pt; padding: 0px 10px;">

@@ -1,6 +1,23 @@
 ﻿@inject IBookingService bookingService
 @inject IBookingRepository _repo
+@inject IEventsRepository _eventRepo
 @inject AlertService Alert
+
+
+@if (_event != null)
+{
+    <div style="background-color:#ffeccc;border-radius: 10px;padding: 10px;">
+        <div class="show-box-sm">
+            <img src="@_event.GetImageUrl()" style="width:100%;border-radius: 10px;" />
+            <div style="margin-top: 5px; font-size: 9pt;text-align:center;">
+                <div class="show-box-title" style="font-weight:bold;font-size: 11pt;"><a href="@_event.GetUrl()" class="osan-link">@_event.Title</a></div>
+                <div class="show-box-time">@_event.Date.ToString("dd/MM/yyyy") - @_event.Service.Name</div>
+            </div>
+        </div>
+    </div>
+}
+
+<br />
 
 <div>
     <EditForm @ref="form" Model="_booking" OnValidSubmit="onSubmit">
@@ -69,11 +86,14 @@
     </EditForm>
 </div>
 
+<br />
+
 <ToastProvider />
 
 @code {
     private EditForm form = default!;
     private BookingDto _booking = new();
+    private Event? _event;
     private string? successMessage;
     private string? errorMessage;
     private bool processing = false;
@@ -83,6 +103,9 @@
 
     [Parameter]
     public string? CampaignId { get; set; }
+
+    [Parameter]
+    public string? EventSlug { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -95,6 +118,11 @@
                 BookingDate = campaign!.BookingDate.ToDateTime(TimeOnly.Parse("10:00 PM")),
                 Service = campaign.Service.Name,
             };
+        }
+
+        if (EventSlug != null)
+        {
+            _event = await _eventRepo.GetEventAsync(EventSlug);
         }
 
         _services = await _repo.GetServicesAsync();
