@@ -47,13 +47,13 @@
         <div class="form-container container" style="padding:10px;">
             <p>
                 <label>Date</label>
-                <InputDate @bind-Value=_booking.BookingDate class="form-control" style="font-size: 12pt;" />
+                <InputDate @bind-Value=_booking.BookingDate class="form-control" style="font-size: 12pt;" disabled="@isEventBased()" />
                 <ValidationMessage For=@(() => _booking.BookingDate) />
             </p>
 
             <p>
                 <label>Service</label>
-                <InputSelect @bind-Value=_booking.Service class="form-control" style="font-size: 12pt;">
+                <InputSelect @bind-Value=_booking.Service class="form-control" style="font-size: 12pt;" disabled="@isEventBased()">
                     <option value="">-- Selectionnez un service --</option>
                     @foreach (var s in _services)
                     {
@@ -130,6 +130,8 @@
 
         StateHasChanged();
     }
+
+    private bool isEventBased() => EventSlug != null && CampaignId != null;
 
     private async void onSubmit()
     {
