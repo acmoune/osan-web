@@ -2,6 +2,7 @@
 @inject IBookingRepository _repo
 @inject IEventsRepository _eventRepo
 @inject AlertService Alert
+@inject NavigationManager nav
 
 
 @if (_event != null)
@@ -162,6 +163,8 @@
                 if (successMessage != null)
                 {
                     await Alert.Info(successMessage);
+                    await Task.Delay(2000);
+                    nav.NavigateTo("/reservation", true);
                 }
                 if (errorMessage != null)
                 {
