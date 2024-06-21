@@ -5,7 +5,7 @@
 }
 
 @section coolheader {
-    <div class="slide-show" style="height: 282px;">
+    <div class="slide-show" style="">
         @foreach (var slide in Model.SlideShow.Pictures)
         {
             <partial name="_SlideItem" model=@slide />
@@ -98,20 +98,22 @@
                 autoplaySpeed: 5000,
             });
 
-            var feedHeader = document.getElementById("feed-header");
-            var sticky = feedHeader.offsetTop;
+            setTimeout(() => {
+                var feedHeader = document.getElementById("feed-header");
+                var sticky = feedHeader.offsetTop;
 
-            function shouldStickFeedHeader() {
-                if (window.pageYOffset > sticky) {
-                    feedHeader.classList.add("sticky");
-                    document.body.classList.add("sticky-body");
-                } else {
-                    feedHeader.classList.remove("sticky");
-                    document.body.classList.remove("sticky-body");
+                function shouldStickFeedHeader() {
+                    if (window.pageYOffset > sticky) {
+                        feedHeader.classList.add("sticky");
+                        document.body.classList.add("sticky-body");
+                    } else {
+                        feedHeader.classList.remove("sticky");
+                        document.body.classList.remove("sticky-body");
+                    }
                 }
-            }
 
-            window.onscroll = function () { shouldStickFeedHeader() };
+                window.onscroll = function () { shouldStickFeedHeader() };
+            }, 3000);
         });
     </script>
 
