@@ -31,7 +31,7 @@
     <meta property="og:image" content="@($"{Model.Event.GetImageUrl()}")" />
 }
 
-<div class="news-container" style="margin-top:0px;">
+@section coolheader {
     @if (Model.Event.IsVideo)
     {
         <partial name="_YoutubePlayer" model="OsanWebsite.Core.Helpers.MediaHelpers.YoutubeVideoLink(Model.Event.YoutubeVideoId!)" />
@@ -40,7 +40,9 @@
     {
         <img src="@Model.Event.GetImageUrl()" />
     }
+}
 
+<div class="news-container" style="margin-top:0px;">
     <div class="news-details">
         <div class="news-content">
             <div class="news-title"><span class="link-danger" style="text-decoration:none;">@Model.Event.Title</span></div>

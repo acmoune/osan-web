@@ -66,7 +66,13 @@
             </div>
 
             <div id="content-body">
-                @RenderBody()
+                <div id="cool-header">
+                    @RenderSection("coolheader", required: false)
+                </div>
+
+                <div style="padding: 10px;">
+                    @RenderBody()
+                </div>
             </div>
         </div>
 

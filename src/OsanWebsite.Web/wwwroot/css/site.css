@@ -2,6 +2,10 @@ body {
     font-family: "Quattrocento Sans", sans-serif !important;
 }
 
+#cool-header img {
+    width: 100%;
+}
+
 .osan-btn {
     width: 100%;
     font-size: 9pt;
@@ -145,7 +149,6 @@ span.feed-menu {
         width: 500px;
         border-left: 1px solid #ba425e;
         border-right: 1px solid #e1bbc5;
-        padding: 10px;
         min-height: calc(100vh + 100px);
     }
 
@@ -207,7 +210,6 @@ span.feed-menu {
 
     #content-body {
         margin-top: 50px;
-        padding: 15px;
     }
 }
 

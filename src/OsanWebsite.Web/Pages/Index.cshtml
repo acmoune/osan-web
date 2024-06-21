@@ -4,12 +4,14 @@
     ViewData["Title"] = "";
 }
 
-<div class="slide-show">
-    @foreach (var slide in Model.SlideShow.Pictures)
-    {
-        <partial name="_SlideItem" model=@slide />
-    }
-</div>
+@section coolheader {
+    <div class="slide-show" style="min-height: 282px;">
+        @foreach (var slide in Model.SlideShow.Pictures)
+        {
+            <partial name="_SlideItem" model=@slide />
+        }
+    </div>
+}
 
 <div style="font-size: 10pt;">
     <div style="text-align:center;display:flex;align-items:center;justify-content:center;">
