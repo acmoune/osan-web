@@ -2,28 +2,40 @@
     font-size: 10pt;
 }
 
-.toolbar-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 5px;
-}
-
-.toolbar-box button {
+.box-body button {
     font-size: 9pt !important;
     margin-right: 5px;
 }
 
 .box-body {
-    display: flex;
-    align-items: center;
+
 }
 
 .box-label {
-    display: flex;
-    flex-direction: column;
-    font-size: 9pt;
-    font-weight: bold;
-    margin-right: 10px;
-    justify-content: center;
+    font-size: 8pt;
+    border: 1px solid #de6e92;
+    background-color: #9a2147;
+    padding: 3px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
+
+.box-actions {
+    font-size: 9pt;
+    border: 1px solid #de6e92;
+    padding: 3px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-width: 0px;
+}
+
+    .box-actions button {
+        background-color: #b94268;
+        border-width: 0px;
+        font-size: 8pt;
+        color: white;
+    }
+
+        .box-actions button[disabled] {
+            color: #e37095;
+        }

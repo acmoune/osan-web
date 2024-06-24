@@ -18,7 +18,7 @@
 
                 <EmptyTemplate>
                     <div class="loading-box">
-                        <span>No booking so far.</span>
+                        <span>Aucune réservation pour le moment.</span>
                     </div>
                 </EmptyTemplate>
 
@@ -27,19 +27,19 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="cell cell-left">Customer</div>
+                                    <div class="header-cell cell-left">Client</div>
                                 </div>
 
                                 <div class="col-2">
-                                    <div class="cell cell-center">Table</div>
+                                    <div class="header-cell cell-center">Table</div>
                                 </div>
 
                                 <div class="col-2">
-                                    <div class="cell cell-center">Status</div>
+                                    <div class="header-cell cell-center">Statût</div>
                                 </div>
 
                                 <div class="col-2">
-                                    <div class="cell cell-center">QR Code</div>
+                                    <div class="header-cell cell-center">QR Code</div>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     <div class="cell cell-center">
                                         @if (b.Cancelling || b.Consuming || b.Confirming)
                                         {
-                                            <Span Class="color:#808080">Working...</Span>
+                                            <Span Class="color:#808080">Patientez...</Span>
                                         }
                                         else
                                         {

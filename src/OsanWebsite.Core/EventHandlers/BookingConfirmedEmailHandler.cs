@@ -27,7 +27,7 @@ Vous devrez le présenter à l'entrée pour être identifié. Veuillez égalemen
 Nous vous disons à bientôt.
 
 Cordialement,
-OSAN Cave.
+O'SAN Cave.
 ";
         await _emailSender.SendMailWithPng(to, subject, body, notification.Booking.QrCodeUrl!);
     }

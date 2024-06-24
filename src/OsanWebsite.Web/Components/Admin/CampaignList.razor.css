@@ -1,26 +1,50 @@
 ﻿#campaign-list {
 }
 
+.month-selected {
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #edecec;
+    border-bottom: 1px solid #DFDFDF;
+    color: #808080;
+    height: 40px;
+}
+
+.month-selected span {
+    font-size: 14pt;
+    margin-left: 10px;
+}
+
+    .month-selected span:hover {
+        cursor: pointer;
+        color: dodgerblue;
+    }
+
 .campaign {
-    font-size: 9pt;
-    margin: 5pt;
-    padding: 5pt;
-    border: 1px solid #DFDFDF;
-    border-radius: 5px;
+    padding: 0px 10px;
+    border-bottom: 1px solid #DFDFDF;
+    display: flex;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
 }
 
 .campaign:hover {
     cursor: pointer;
-    border: 1px solid lightblue;
 }
 
 .campaign-date {
-    font-size: 10pt;
-    font-weight: bold;
+    font-size: 34pt;
+}
+
+.campaign .campaign-status {
+    color: #808080;
 }
 
 .campaign.Opened .campaign-status {
-    color:green;
+    color: var(--primary);
 }
 
 .campaign.Closed .campaign-status {
@@ -28,7 +52,7 @@
 }
 
 .campaign.Selected {
-    background-color: #ecf1f3;
+    background-color: #deeaef;
 }
 
 .loading-box {

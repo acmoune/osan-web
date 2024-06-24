@@ -157,31 +157,41 @@ public class StrapiBookingRepository : IBookingRepository
         return result != null ? result.ToBookingCampaign() : null;
     }
 
-    public async Task<PaggingResult<BookingCampaign>> GetCampaigns(int page, int size)
+    public async Task<IEnumerable<BookingCampaign>> GetCampaigns(int year, int month)
     {
+        var start = new DateOnly(year, month, 1);
+        var end = new DateOnly(year, month, DateTime.DaysInMonth(year, month));
+
         var query = new GraphQLRequest
         {
-            Query = @"query GetCampaigns($pageNumber: Int!, $pageSize: Int!){
-                bookingCampaigns(sort: ""BookingDate:desc"", pagination: {page: $pageNumber, pageSize: $pageSize}) {
-                    data { 
+            Query = @"query GetCampaigns($startDate: Date!, $endDate: Date!){
+                bookingCampaigns(filters: {BookingDate: {between: [$startDate, $endDate]}}, sort: ""BookingDate:desc""){
+                    data {
                         id
-                        attributes { 
-                            BookingDate Status
-                            service { data { id attributes {Name Description StartTime EndTime }} }
+                        attributes {
+                            BookingDate
+                            Status
+                            service { 
+                                data { 
+                                    id 
+                                    attributes {
+                                        Name
+                                        Description 
+                                        StartTime 
+                                        EndTime
+                                    }
+                                }
+                            }
                         }
-                    },
-                    meta { pagination { pageCount pageSize page total } }
+                    }
                 }
             }",
             OperationName = "GetCampaigns",
-            Variables = new { pageNumber = page, pageSize = size }
+            Variables = new { startDate = start, endDate = end }
         };
 
         var response = await _graphQLClient.SendQueryAsync<BookingCampaignCollectionResponse>(query);
-        var items = response.Data.bookingCampaigns.data.Select(data => data.ToBookingCampaign());
-        var meta = response.Data.bookingCampaigns.meta!.pagination;
-
-        return new PaggingResult<BookingCampaign>(items, meta.total, meta.pageSize, meta.pageCount, meta.page);
+        return response.Data.bookingCampaigns.data.Select(d => d.ToBookingCampaign());
     }
 
 

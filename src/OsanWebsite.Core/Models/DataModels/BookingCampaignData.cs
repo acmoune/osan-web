@@ -27,7 +27,6 @@ public class BookingCampaignAttributes
 public class BookingCampaignCollectionData
 {
     public IEnumerable<BookingCampaignData> data { get; set; } = default!;
-    public PaginationData? meta { get; set; }
 }
 
 public class BookingCampaignItemData

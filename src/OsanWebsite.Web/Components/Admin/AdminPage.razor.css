@@ -1,10 +1,9 @@
 ﻿#admin-bar {
-    height: 40px;
+    height: 70px;
     display: flex;
-    padding: 0px 25px;
+    padding: 0px 10px;
     align-items: center;
-    border-bottom: 1px solid #233c5b;
-    background-color: #5c7ea8;
+    background-color: #b94268;
     color: white;
 }
 
@@ -24,18 +23,19 @@
 
 #admin-sidebar {
     width: 250px;
-    height: calc(100vh - 40px);
-    position: fixed;
-    top: 40px;
+    height: calc(100vh - 70px);
+    top: 70px;
     left: 0px;
     border-right: 1px solid #DFDFDF;
+    overflow-y: auto;
+    background-color: #f6f4f4;
 }
 
 #admin-body {
     width: calc(100vw - 250px);
-    height: calc(100vh - 40px);
+    height: calc(100vh - 70px);
     position: fixed;
-    top: 40px;
+    top: 70px;
     right: 0px;
     overflow-y: auto;
 }

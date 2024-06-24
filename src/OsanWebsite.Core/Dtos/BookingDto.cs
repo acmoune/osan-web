@@ -17,13 +17,13 @@ public class BookingDtoValidator : AbstractValidator<BookingDto>
 {
     public BookingDtoValidator()
     {
-        RuleFor(x => x.CustomerName).NotEmpty().WithMessage("Vous n'avez pas fourni votre nom");
+        RuleFor(x => x.CustomerName).NotEmpty().WithMessage("Le nom est requis");
         RuleFor(x => x.CustomerPhone)
-            .NotEmpty().WithMessage("Vous n'avez pas fourni votre numéro de téléphone")
-            .Matches(@"^\d+$").WithMessage("Vous ne pouvez entrer que des chiffres");
+            .NotEmpty().WithMessage("Le numéro de téléphone est requis")
+            .Matches(@"^\d+$").WithMessage("Uniquement des chiffres");
         RuleFor(x => x.CustomerEmail)
-            .NotEmpty().WithMessage("Vous n'avez pas fourni votre adresse email")
-            .EmailAddress().WithMessage("Vous n'avez pas fourni une adresse email valide");
+            .NotEmpty().WithMessage("L'adresse email est requise")
+            .EmailAddress().WithMessage("Adresse email invalide");
         RuleFor(x => x.TableType).NotEmpty().WithMessage("Veuillez choisir une table");
         RuleFor(x => x.Service).NotEmpty().WithMessage("Veuillez choisir un service");
         RuleFor(x => x.BookingDate).NotEmpty().WithMessage("Veuillez choisir une date");

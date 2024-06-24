@@ -7,16 +7,17 @@
 {
     <div id="toolbar">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row no-gutters">
                 <div class="col-6">
-                    <div class="toolbar-box">
-                        <div class="box-body">
-                            <div class="box-label">
-                                <Span>@Data.SelectedCampaign.BookingDate.ToString("dd/MM/yyyy") - @Data.SelectedCampaign.Service.Name</Span>
-                            </div>
-                            <button class="btn btn-primary btn-sm" disabled=@AddBookingButtonIsDisabled() @onclick=showAddWindow>Add Booking</button>
-                            <button class="btn btn-primary btn-sm" disabled=@CloseCampaignButtonIsDisabled() @onclick=showCloseCampaignMessage>Close Campaign</button>
-                            <button class="btn btn-primary btn-sm" disabled=@CompleteCampaignButtonIsDisabled() @onclick=showCompleteCampaignMessage>Complete Campaign</button>
+                    <div class="box-body" style="margin-right: 5px;">
+                        <div class="box-label">
+                            <strong>Campagne:</strong> &nbsp;@Data.SelectedCampaign.BookingDate.ToString("dd/MM/yyyy") - @Data.SelectedCampaign.Service.Name
+                        </div>
+
+                        <div class="box-actions">
+                            <button disabled=@AddBookingButtonIsDisabled() @onclick=showAddWindow>Nouvelle réservation</button>
+                            <button disabled=@CloseCampaignButtonIsDisabled() @onclick=showCloseCampaignMessage>Fermer</button>
+                            <button disabled=@CompleteCampaignButtonIsDisabled() @onclick=showCompleteCampaignMessage>Finaliser</button>
                         </div>
                     </div>
                 </div>
@@ -24,12 +25,16 @@
                 <div class="col-6">
                     @if (Data.SelectedBooking != null)
                     {
-                        <div class="toolbar-box">
-                            <div class="box-body">
-                                <button class="btn btn-primary btn-sm" disabled=@EditBookingButtonIsDisabled() @onclick=showEditWindow>Edit</button>
-                                <button class="btn btn-primary btn-sm" disabled=@ConfirmBookingButtonIsDisabled() @onclick=showConfirmMessage>Confirm</button>
-                                <button class="btn btn-primary btn-sm" disabled=@CancelBookingButtonIsDisabled() @onclick=showCancelMessage>Cancel</button>
-                                <button class="btn btn-primary btn-sm" disabled=@ConsumedBookingButtonIsDisabled() @onclick=showConsumedMessage>Mask asConsumed</button>
+                        <div class="box-body" style="margin-left: 5px;">
+                            <div class="box-label">
+                                <strong>Réservation:</strong> &nbsp;@Data.SelectedBooking.CustomerName
+                            </div>
+
+                            <div class="box-actions">
+                                <button disabled=@EditBookingButtonIsDisabled() @onclick=showEditWindow>Modifier</button>
+                                <button disabled=@ConfirmBookingButtonIsDisabled() @onclick=showConfirmMessage>Confirmer</button>
+                                <button disabled=@CancelBookingButtonIsDisabled() @onclick=showCancelMessage>Annuler</button>
+                                <button disabled=@ConsumedBookingButtonIsDisabled() @onclick=showConsumedMessage>Consommée</button>
                             </div>
                         </div>
                     }
@@ -44,7 +49,7 @@
     <Modal @ref="editModal" Closing=@ModalClosing>
         <ModalContent>
             <ModalHeader>
-                <ModalTitle>Edit Booking</ModalTitle>
+                <ModalTitle>Modifier la réservation</ModalTitle>
             </ModalHeader>
             <ModalBody>
                 <CascadingValue Name="FormModal" Value="editModal">
@@ -60,7 +65,7 @@
     <Modal @ref="addModal" Closing=@ModalClosing>
         <ModalContent>
             <ModalHeader>
-                <ModalTitle>Add Booking</ModalTitle>
+                <ModalTitle>Nouvelle réservation</ModalTitle>
             </ModalHeader>
             <ModalBody>
                 <CascadingValue Name="FormModal" Value="addModal">
@@ -98,10 +103,10 @@
 
     private async Task showConfirmMessage()
     {
-        if (await MessageService.Confirm("Are you sure you want to confirm this booking?", "Confirm Booking", opts =>
+        if (await MessageService.Confirm("Êtes-vous certain de vouloir confirmer cette réservation?", "Confirmer la réservation", opts =>
         {
-            opts.ConfirmButtonText = "Yes";
-            opts.CancelButtonText = "No";
+            opts.ConfirmButtonText = "Oui";
+            opts.CancelButtonText = "Non";
             opts.ShowCloseButton = false;
         }))
         {
@@ -111,10 +116,10 @@
 
     private async Task showCancelMessage()
     {
-        if (await MessageService.Confirm("Are you sure you want to cancel this booking?", "Cancel Booking", opts =>
+        if (await MessageService.Confirm("Êtes-vous certain de vouloir annuler cette réservation?", "Annuler la réservation", opts =>
         {
-            opts.ConfirmButtonText = "Yes";
-            opts.CancelButtonText = "No";
+            opts.ConfirmButtonText = "Oui";
+            opts.CancelButtonText = "Non";
             opts.ShowCloseButton = false;
         }))
         {
@@ -124,10 +129,10 @@
 
     private async Task showConsumedMessage()
     {
-        if (await MessageService.Confirm("Are you sure you want to mark this booking as Consumed?", "Mark Booking as Consumed", opts =>
+        if (await MessageService.Confirm("Êtes-vous certain de vouloir marquer cette réservation comme consommée", "Marquer comme consommée", opts =>
         {
-            opts.ConfirmButtonText = "Yes";
-            opts.CancelButtonText = "No";
+            opts.ConfirmButtonText = "Oui";
+            opts.CancelButtonText = "Non";
             opts.ShowCloseButton = false;
         }))
         {
@@ -137,10 +142,10 @@
 
     private async Task showCloseCampaignMessage()
     {
-        if (await MessageService.Confirm("Are you sure you want to close this campaign?", "Close Campaign", opts =>
+        if (await MessageService.Confirm("Êtes-vous certain de vouloir fermer cette campagne?", "Fermer la campagne", opts =>
         {
-            opts.ConfirmButtonText = "Yes";
-            opts.CancelButtonText = "No";
+            opts.ConfirmButtonText = "Oui";
+            opts.CancelButtonText = "Non";
             opts.ShowCloseButton = false;
         }))
         {
@@ -150,10 +155,10 @@
 
     private async Task showCompleteCampaignMessage()
     {
-        if (await MessageService.Confirm("Are you sure you want to complete this campaign?", "Complete Campaign", opts =>
+        if (await MessageService.Confirm("Êtes-vous certain de vouloir finaliser cette campagne?", "Finaliser la campagne", opts =>
         {
-            opts.ConfirmButtonText = "Yes";
-            opts.CancelButtonText = "No";
+            opts.ConfirmButtonText = "Oui";
+            opts.CancelButtonText = "Non";
             opts.ShowCloseButton = false;
         }))
         {

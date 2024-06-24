@@ -20,17 +20,7 @@
 }
 
 .campaign.Selected {
-    background-color: #ecf1f3;
-}
-
-.loading-box {
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    height: calc(100vh - 120px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #deeaef;
 }
 
 #booking-list .cell {
@@ -42,17 +32,26 @@
     justify-content: center;
 }
 
+#booking-list .header-cell {
+    display: flex;
+    flex-direction: column;
+    height: 39.2px;
+    align-items: center;
+    justify-content: center;
+}
+
 #booking-list .cell-left {
     align-items:flex-start;
 }
 
 #booking-list .list-header {
     font-weight: bold;
-    background-color: #E7E7E7;
+    background-color: #edecec;
+    color: #808080;
 }
 
 #booking-list .list-item.Selected {
-    background-color: #ecf1f3;
+    background-color: #deeaef;
 }
 
 #booking-list .list-item:hover {
@@ -81,23 +80,23 @@
 }
 
     .booking-status.Pending {
-        color:  tomato;
+        color: tomato;
     }
 
     .booking-status.Confirmed {
-        color: #3068ce;
+        color: var(--primary);
     }
 
     .booking-status.Cancelled {
-        color: indigo;
+        color: var(--warning);
     }
 
     .booking-status.Consumed {
-        color: #1fb61f
+        color: #808080
     }
 
-    .booking-status.NotConsumed {
-        color: orangered;
+    .booking-status.Unconsumed {
+        color: var(--orange);
     }
 
     .qr-code {

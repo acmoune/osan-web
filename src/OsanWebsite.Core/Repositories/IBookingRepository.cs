@@ -17,7 +17,7 @@ public interface IBookingRepository
 
     Task<BookingCampaign?> GetCampaign(DateOnly date, string serviceName);
     Task<BookingCampaign?> GetCampaign(string campaign_id);    
-    Task<PaggingResult<BookingCampaign>> GetCampaigns(int page, int size);
+    Task<IEnumerable<BookingCampaign>> GetCampaigns(int year, int month);
     Task<BookingCampaign> SaveCampaign(BookingCampaign campaign);
     Task CompleteCampaign(BookingCampaign campaign);
 }

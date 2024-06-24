@@ -1,37 +1,119 @@
-﻿@inject DataService Data
+﻿@inject IModalService ModalService
+@inject DataService Data
+@inject IBookingRepository _repo
+@inject IBookingService bookingService
+@inject AlertService Alert
 @implements IDisposable
 
 <div id="campaign-list">
+    <div class="month-selected">
+        <div style="font-size: 14pt;flex-grow:1;">@DateUtils.Months[monthData.Month] @monthData.Year</div>
+        <span @onclick="@showEditWindow"><i class="fa-regular fa-pen-to-square"></i></span>
+        <span @onclick="@showAddWindow"><i class="fa-solid fa-plus"></i></span>
+    </div>
+
     @if (Data.Campaigns != null)
     {
-        <PaggedList 
-            Items="Data.Campaigns.Items"
-            CurrentPage="Data.Campaigns.CurrentPage"
-            PageSize="Data.Campaigns.PageSize"
-            PageCount="Data.Campaigns.TotalPages"
-            Total="Data.Campaigns.TotalItems"
-            OnFetch="Data.FetchCampaigns"
-            TItem=BookingCampaign
-            Loading=false>
+        foreach (var c in Data.Campaigns)
+        {
+            <div class="campaign @c.Status.ToString() @(Data.SelectedCampaign == c ? "Selected" : "")" @onclick=@(() => selectCampaign(c))>
+                <div class="campaign-date">@c.BookingDate.Day.ToString("D2")</div>
 
-            <EmptyTemplate>
-                <div class="loading-box">
-                    <span>No campaign so far.</span>
-                </div>
-            </EmptyTemplate>
-
-            <ItemTemplate Context="c">
-                <div class="campaign @c.Status.ToString() @(Data.SelectedCampaign == c ? "Selected" : "")" @onclick=@(() => selectCampaign(c))>
-                    <div class="campaign-date">@c.BookingDate.ToString("dd/MM/yyyy")</div>
-                    <div class="campaign-service"><span>@c.Service.Name</span>: @c.Service.StartTime - @c.Service.EndTime</div>
-                    <div>Status: <span class="campaign-status">@c.Status.ToString()</span></div>
-                </div>
-            </ItemTemplate>
-        </PaggedList>
+                <div style="flex-grow:1;display:flex;flex-direction:column;padding-left: 10px;font-size: 9pt;justify-content:center;">
+                    <div class="campaign-service">@c.Service.Name</div>
+                    <span class="campaign-status">@c.Status.ToString()</span>
+                </div> 
+            </div>
+        }
     }
 </div>
 
+<Modal @ref="monthModal" Closing="@ModalClosing">
+    <ModalContent>
+        <ModalHeader>
+            <ModalTitle>Changer de mois</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+
+        <ModalBody>
+            <EditForm Model="data" OnValidSubmit="OnEditSubmit">
+                <div class="row no-gutters">
+                    <div class="col-5" style="padding-right: 10px;">
+                        <InputSelect @bind-Value=data.Year class="form-control" style="font-size: 10pt;">
+                            @foreach (var year in DateUtils.Years)
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="col-5" style="padding-right: 10px;">
+                        <InputSelect @bind-Value=data.Month class="form-control" style="font-size: 10pt;">
+                            @foreach (var month in DateUtils.Months)
+                            {
+                                <option value="@month.Key">@month.Value</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="col-2">
+                        <button type="submit"
+                                class="btn btn-primary btn-sm form-control"
+                                style="border-width: 0px;">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </EditForm>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="addModal" Closing="@ModalClosing">
+    <ModalContent>
+        <ModalHeader>
+            <ModalTitle>Nouvelle Campagne</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+
+        <ModalBody>
+            <EditForm Model="_campaign" OnValidSubmit="OnAddSubmit">
+                <div class="row no-gutters">
+                    <div class="col-4" style="padding-right: 10px;">
+                        <InputDate @bind-Value="_campaign.BookingDate" class="form-control" style="font-size: 10pt;" />
+                    </div>
+
+                    <div class="col-7" style="padding-right: 10px;">
+                        <InputSelect @bind-Value="_campaign.ServiceName" class="form-control" style="font-size: 12pt;">
+                            @foreach (var s in _services)
+                            {
+                                <option value="@s.Name">@s.Name (@s.StartTime - @s.EndTimeString())</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="col-1">
+                        <button type="submit"
+                                class="btn btn-primary btn-sm form-control"
+                                style="border-width: 0px;">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </EditForm>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
 @code {
+    private Modal? monthModal;
+    private Modal? addModal;
+    private MonthData monthData = new MonthData { Month = DateTime.Now.Month, Year = DateTime.Now.Year };
+    private MonthData data = new MonthData { Month = DateTime.Now.Month, Year = DateTime.Now.Year };
+
+    private IEnumerable<Service> _services = Enumerable.Empty<Service>();
+    private CampaignDto _campaign = new CampaignDto { BookingDate = DateOnly.FromDateTime(DateTime.Now), ServiceName = "" };
+
     private async void OnPropertyChangedHandler(Object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         await InvokeAsync(() => StateHasChanged());
@@ -40,7 +122,9 @@
     protected override async void OnInitialized()
     {
         Data.PropertyChanged += OnPropertyChangedHandler;
-        await Data.FetchCampaigns(1, 10);
+        await Data.FetchCampaigns(monthData.Year, monthData.Month);
+        _services = await _repo.GetServicesAsync();
+        _campaign = new CampaignDto { BookingDate = DateOnly.FromDateTime(DateTime.Now), ServiceName = _services.First().Name };
     }
 
     public void Dispose()
@@ -51,5 +135,50 @@
     private void selectCampaign(BookingCampaign campaign)
     {
         Data.SelectedCampaign = campaign;
+    }
+
+    private Task showEditWindow()
+    {
+        data = new MonthData { Month = monthData.Month, Year = monthData.Year };
+        return monthModal!.Show();
+    }
+
+    private Task showAddWindow()
+    {
+        _campaign = new CampaignDto { BookingDate = DateOnly.FromDateTime(DateTime.Now), ServiceName = _services.First().Name };
+        return addModal!.Show();
+    }
+
+    private async Task OnEditSubmit()
+    {
+        monthData.Month = data!.Month;
+        monthData.Year = data!.Year;
+        await monthModal!.Hide();
+        await Data.FetchCampaigns(monthData.Year, monthData.Month);
+        StateHasChanged();
+    }
+
+    private async Task OnAddSubmit()
+    {
+        var serv = await _repo.GetServiceByBame(_campaign.ServiceName);
+        try
+        {
+            var campaign = await bookingService.GetOrCreateCampaign(_campaign.BookingDate, serv);
+            monthData.Month = campaign.BookingDate.Month;
+            monthData.Year = campaign.BookingDate.Year;
+            await addModal!.Hide();
+            await Data.FetchCampaigns(campaign.BookingDate.Year, campaign.BookingDate.Month);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            await Alert.Error(ex.Message);
+        }
+    }
+
+    private Task ModalClosing(ModalClosingEventArgs args)
+    {
+        args.Cancel = args.CloseReason != CloseReason.UserClosing;
+        return Task.CompletedTask;
     }
 }

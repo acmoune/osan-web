@@ -21,7 +21,7 @@ Votre réservation du {notification.Booking.Campaign.BookingDate}, pour le servi
 Nous espérons vous compter bientôt parmi nous.
 
 Cordialement,
-OSAN Cave.
+O'SAN Cave.
 ";
         await _emailSender.SendMail(to, subject, body);
     }

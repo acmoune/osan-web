@@ -9,13 +9,13 @@
         <FluentValidationValidator />
 
         <p>
-            <label>Name</label>
+            <label>Nom</label>
             <InputText @bind-Value=_booking.CustomerName class="form-control" />
             <ValidationMessage For=@(() => _booking.CustomerName) />
         </p>
 
         <p>
-            <label>Phone</label>
+            <label>Téléphone</label>
             <InputText @bind-Value=_booking.CustomerPhone class="form-control" />
             <ValidationMessage For=@(() => _booking.CustomerPhone) />
         </p>
@@ -43,7 +43,7 @@
                 <span class="btn btn-outline-dark btn-sm span-btn"
                       style="font-size:9pt;width:100%"
                       @onclick=@(async () => await FormModal.Hide())>
-                    Cancel
+                    Annuler
                 </span>
             </Div>
 
@@ -52,7 +52,7 @@
                         class="btn btn-primary btn-sm"
                         style="font-size:9pt;width:100%"
                         disabled="@processing">
-                    @(processing ? "Processing ..." : "Add")
+                    @(processing ? "Patientez ..." : "Ajouter")
                 </button>
             </Div>
         </Div>

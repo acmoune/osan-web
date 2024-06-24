@@ -1,8 +1,9 @@
 ﻿@inject IBookingRepository repo
+@inject DataService Data
 
 <div id="admin-bar">
     <div id="admin-header">
-        <img src="/images/logo-o.png" style="height: 30px" />
+        <img src="/images/o-manager.png" style="height: 50px" />
     </div>
 
     <div id="toolbar">
@@ -20,7 +21,17 @@
 </div>
 
 <div id="admin-body">
-    <BookingList />
+    @if (Data.SelectedCampaign != null)
+    {
+        <BookingList />
+    }
+    else
+    {
+        <div class="loading-box">
+            <span>Veuillez sélectionner une campagne à votre gauche.</span>
+        </div>
+    }
+
 </div>
 
 <ModalProvider />
@@ -30,9 +41,23 @@
 @code {
     private IEnumerable<TableType>? _tableTypes;
 
+    private async void OnPropertyChangedHandler(Object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "SelectedCampaign")
+        {
+            await InvokeAsync(() => StateHasChanged());
+        }
+    }
+
     protected override async void OnInitialized()
     {
+        Data.PropertyChanged += OnPropertyChangedHandler;
         _tableTypes = await repo.GetTableTypesAsync();
         StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        Data.PropertyChanged -= OnPropertyChangedHandler;
     }
 }

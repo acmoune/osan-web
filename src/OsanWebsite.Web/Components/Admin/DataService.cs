@@ -20,8 +20,8 @@ public class DataService : BaseViewModel
 
     // Properties
 
-    private PaggingResult<BookingCampaign>? _campaigns = default!;
-    public PaggingResult<BookingCampaign>? Campaigns
+    private IEnumerable<BookingCampaign>? _campaigns = default!;
+    public IEnumerable<BookingCampaign>? Campaigns
     {
         get => _campaigns;
         set => SetValue(ref _campaigns, value);
@@ -51,11 +51,11 @@ public class DataService : BaseViewModel
 
     // Operations
 
-    public async Task FetchCampaigns(int page, int size)
+    public async Task FetchCampaigns(int year, int month)
     {
         SelectedCampaign = null;
         SelectedBooking = null;
-        Campaigns = await _repo.GetCampaigns(page, size);
+        Campaigns = await _repo.GetCampaigns(year, month);
     }
 
     public async Task FetchBookings(int page, int size)
@@ -114,14 +114,14 @@ public class DataService : BaseViewModel
 
     public async Task CloseCampaignThunk(string campaign_id)
     {
-        await _bookingService.CloseCampaign(campaign_id);
-        await FetchCampaigns(1, 10);
+        var campaign = await _bookingService.CloseCampaign(campaign_id);
+        await FetchCampaigns(campaign.BookingDate.Year, campaign.BookingDate.Month);
     }
 
     public async Task CompleteCampaignThunk(string campaign_id)
     {
-        await _bookingService.CompleteCampaign(campaign_id);
-        await FetchCampaigns(1, 10);
+        var campaign = await _bookingService.CompleteCampaign(campaign_id);
+        await FetchCampaigns(campaign.BookingDate.Year, campaign.BookingDate.Month);
     }
 
     private void UpdateBooking(BookingItem item)
